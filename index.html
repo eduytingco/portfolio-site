@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <header>
+
     <head>
         <link rel="stylesheet" href="src/static/css/edsite-styles.css" />
         <meta charset="UTF-8" />
@@ -13,6 +14,262 @@
 <body>
     <main>
         <section id="hero">
+            <svg width="500" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 80" role="img"
+                aria-labelledby="title desc">
+                <g transform="scale(0.3571428571 0.1538461538)">
+
+                    <title id="title">Animated Ed Uytingco logo</title>
+                    <desc id="desc">A geometric EU monogram is constructed from guide lines, followed by a divider
+                        and the
+                        Ed Uytingco wordmark.</desc>
+
+                    <style>
+                        :root {
+                            --bg: #0a0a0a;
+                            --ink: #ffffff;
+                            --guide: #6f6f6f;
+                        }
+
+                        .background {
+                            fill: var(--bg);
+                        }
+
+                        .guide {
+                            fill: none;
+                            stroke: var(--guide);
+                            stroke-width: 2;
+                            stroke-linecap: square;
+                            stroke-dasharray: 220;
+                            stroke-dashoffset: 220;
+                            opacity: 0;
+                            animation:
+                                guide-draw .75s ease-out forwards,
+                                guide-fade .55s 2.45s ease-in forwards;
+                        }
+
+                        .guide.g2 {
+                            animation-delay: .08s, 2.45s;
+                        }
+
+                        .guide.g3 {
+                            animation-delay: .16s, 2.45s;
+                        }
+
+                        .guide.g4 {
+                            animation-delay: .24s, 2.45s;
+                        }
+
+                        .anchor {
+                            fill: var(--guide);
+                            opacity: 0;
+                            animation:
+                                anchor-in .2s .45s ease-out forwards,
+                                guide-fade .55s 2.45s ease-in forwards;
+                        }
+
+                        .anchor.a2 {
+                            animation-delay: .53s, 2.45s;
+                        }
+
+                        .anchor.a3 {
+                            animation-delay: .61s, 2.45s;
+                        }
+
+                        .anchor.a4 {
+                            animation-delay: .69s, 2.45s;
+                        }
+
+                        .mark-part {
+                            fill: var(--ink);
+                            opacity: 0;
+                            transform-box: fill-box;
+                            transform-origin: left center;
+                            transform: scaleX(0);
+                            animation: build-mark .65s cubic-bezier(.65, 0, .35, 1) forwards;
+                        }
+
+                        .e-top {
+                            animation-delay: .55s;
+                        }
+
+                        .e-mid {
+                            animation-delay: .72s;
+                        }
+
+                        .e-bottom {
+                            animation-delay: .89s;
+                        }
+
+                        .u-left,
+                        .u-right {
+                            transform-origin: center bottom;
+                            transform: scaleY(0);
+                        }
+
+                        .u-left {
+                            animation-name: build-u;
+                            animation-delay: 1.05s;
+                        }
+
+                        .u-right {
+                            animation-name: build-u;
+                            animation-delay: 1.18s;
+                        }
+
+                        .u-base {
+                            transform-origin: center center;
+                            transform: scaleX(0);
+                            animation-delay: 1.32s;
+                        }
+
+                        .divider {
+                            fill: var(--ink);
+                            transform-box: fill-box;
+                            transform-origin: center center;
+                            transform: scaleY(0);
+                            animation: divider-in .6s 1.65s cubic-bezier(.65, 0, .35, 1) forwards;
+                        }
+
+                        .wordmark {
+                            fill: var(--ink);
+                            opacity: 0;
+                            transform: translateX(-28px);
+                            animation: wordmark-in .7s 2s cubic-bezier(.22, 1, .36, 1) forwards;
+                        }
+
+                        .name {
+                            fill: var(--ink);
+                            opacity: 0;
+                            letter-spacing: 22px;
+                            animation: name-in .7s 2.25s ease-out forwards;
+                        }
+
+                        @keyframes guide-draw {
+                            0% {
+                                opacity: 0;
+                                stroke-dashoffset: 220;
+                            }
+
+                            20% {
+                                opacity: 1;
+                            }
+
+                            100% {
+                                opacity: 1;
+                                stroke-dashoffset: 0;
+                            }
+                        }
+
+                        @keyframes guide-fade {
+                            to {
+                                opacity: 0;
+                            }
+                        }
+
+                        @keyframes anchor-in {
+                            to {
+                                opacity: 1;
+                            }
+                        }
+
+                        @keyframes build-mark {
+                            to {
+                                opacity: 1;
+                                transform: scaleX(1);
+                            }
+                        }
+
+                        @keyframes build-u {
+                            to {
+                                opacity: 1;
+                                transform: scaleY(1);
+                            }
+                        }
+
+                        @keyframes divider-in {
+                            to {
+                                transform: scaleY(1);
+                            }
+                        }
+
+                        @keyframes wordmark-in {
+                            to {
+                                opacity: 1;
+                                transform: translateX(0);
+                            }
+                        }
+
+                        @keyframes name-in {
+                            to {
+                                opacity: 1;
+                            }
+                        }
+
+                        @media (prefers-reduced-motion: reduce) {
+
+                            .guide,
+                            .anchor {
+                                display: none;
+                            }
+
+                            .mark-part,
+                            .divider,
+                            .wordmark,
+                            .name {
+                                animation: none;
+                                opacity: 1;
+                                transform: none;
+                            }
+                        }
+                    </style>
+
+                    <rect class="background" width="1400" height="520" />
+
+                    <!-- Construction guides -->
+                    <g aria-hidden="true">
+                        <line class="guide g1" x1="110" y1="150" x2="350" y2="150" />
+                        <line class="guide g2" x1="110" y1="230" x2="320" y2="230" />
+                        <line class="guide g3" x1="110" y1="330" x2="350" y2="330" />
+                        <line class="guide g4" x1="190" y1="130" x2="190" y2="390" />
+
+                        <rect class="anchor a1" x="106" y="146" width="8" height="8" />
+                        <rect class="anchor a2" x="106" y="226" width="8" height="8" />
+                        <rect class="anchor a3" x="106" y="326" width="8" height="8" />
+                        <rect class="anchor a4" x="186" y="386" width="8" height="8" />
+                    </g>
+
+                    <!-- EU monogram -->
+                    <g>
+                        <!-- E -->
+                        <path class="mark-part e-top" d="M190 145 H355 L330 185 H190 Z" />
+                        <path class="mark-part e-mid" d="M190 215 H325 V255 H190 Z" />
+                        <path class="mark-part e-bottom" d="M190 300 H330 L360 345 H190 Z" />
+
+                        <!-- U -->
+                        <path class="mark-part u-left" d="M360 215 H405 V305 L430 345 H390 L360 305 Z" />
+                        <path class="mark-part u-right" d="M515 145 H560 V305 L530 345 H490 L515 305 Z" />
+                        <path class="mark-part u-base" d="M390 345 H530 L500 385 H420 Z" />
+                    </g>
+
+                    <!-- Divider -->
+                    <rect class="divider" x="645" y="135" width="5" height="255" />
+
+                    <!-- Wordmark -->
+                    <g class="wordmark">
+                        <text x="715" y="245"
+                            font-family="Eurostile, Microgramma, Bank Gothic, Orbitron, Arial Black, sans-serif"
+                            font-size="126" font-weight="900" letter-spacing="-4">
+                            ED
+                        </text>
+                    </g>
+
+                    <text class="name" x="720" y="330"
+                        font-family="Eurostile, Microgramma, Bank Gothic, Orbitron, Arial Black, sans-serif"
+                        font-size="52" font-weight="700">
+                        UYTINGCO
+                    </text>
+                </g>
+            </svg>
             <div id="hero-content" class="container">
                 <h1 id="hero-title"></h1>
                 <p id="hero-description"></p>
@@ -39,7 +296,8 @@
     </main>
 </body>
 <footer id="footer">
-    <section><span id="footer-content"></span></section>
+    <section><span id="footer-content" role="footer-content"></span></section>
     <script src="dist/static/js/edsite-scripts.js" type="module"></script>
 </footer>
+
 </html>
