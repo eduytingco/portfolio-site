@@ -2,6 +2,7 @@
 <html lang="en">
 <header>
     <head>
+        <link rel="stylesheet" href="src/static/css/edsite-styles.css" />
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,13 +12,34 @@
 
 <body>
     <main>
-        <section id="hero"></section>
-        <section id="about"></section>
-        <section id="projects"></section>
-        <section id="contact"></section>
+        <section id="hero">
+            <div id="hero-content" class="container">
+                <h1 id="hero-title"></h1>
+                <p id="hero-description"></p>
+            </div>
+        </section>
+        <section id="about">
+            <div id="about-content" class="container">
+                <h2 id="about-title"></h2>
+                <p id="about-description"></p>
+            </div>
+        </section>
+        <section id="projects">
+            <div id="projects-content" class="container">
+                <h2 id="projects-title"></h2>
+                <p id="projects-description"></p>
+            </div>
+        </section>
+        <section id="contact">
+            <div id="contact-content" class="container">
+                <h2 id="contact-title"></h2>
+                <p id="contact-description"></p>
+            </div>
+        </section>
     </main>
 </body>
-<footer>
-    <section id="footer">&copy; <span id="footer-content"></span></section>
+<footer id="footer">
+    <section><span id="footer-content"></span></section>
+    <script src="dist/static/js/edsite-scripts.js" type="module"></script>
 </footer>
 </html>
