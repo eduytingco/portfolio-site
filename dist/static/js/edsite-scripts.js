@@ -40,13 +40,13 @@ function loadContent() {
     <p>${getMessage("hero.description")}</p>`;
     about.innerHTML = `<h2>${getMessage("about.title")}</h2>
     <p>${getMessage("about.description")}</p>
-    <button onclick="window.location.href='pages.html?page=about'">Learn More</button>`;
+    <button onclick="window.location.href='pages.html?page=about'">${getMessage("CTA.about")}</button>`;
     projects.innerHTML = `<h2>${getMessage("projects.title")}</h2>
     <p>${getMessage("projects.description")}</p>
-    <button onclick="window.location.href='pages.html?page=projects'">View Projects</button>`;
+    <button onclick="window.location.href='pages.html?page=projects'">${getMessage("CTA.projects")}</button>`;
     contact.innerHTML = `<h2>${getMessage("contact.title")}</h2>
     <p>${getMessage("contact.description")}</p>
-    <button onclick="window.location.href='pages.html?page=contact'">Contact Me</button>`;
+    <button onclick="window.location.href='pages.html?page=contact'">${getMessage("CTA.contact")}</button>`;
 }
 async function init() {
     await loadMessages("en");
