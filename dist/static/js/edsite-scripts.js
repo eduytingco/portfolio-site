@@ -4,34 +4,55 @@ function loadNavbar() {
     if (subpageNav === null) {
         return;
     }
-    // Logo click -> Home page
-    const navLogo = document.getElementById("nav-logo");
-    if (navLogo !== null) {
-        navLogo.style.cursor = "pointer";
-        navLogo.addEventListener("click", () => {
-            window.location.href = "index.html";
-        });
-        // Optional: keyboard accessibility if the SVG isn't already inside a link
-        navLogo.setAttribute("tabindex", "0");
-        navLogo.setAttribute("role", "link");
-        navLogo.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                window.location.href = "index.html";
-            }
+    const menuToggle = document.querySelector("#nav-menu-toggle");
+    const navMenu = document.getElementById("nav-menu");
+    function closeMenu() {
+        if (menuToggle === null || navMenu === null) {
+            return;
+        }
+        menuToggle.classList.remove("is-open");
+        navMenu.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+    }
+    if (menuToggle !== null && navMenu !== null) {
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.classList.toggle("is-open", !isOpen);
+            navMenu.classList.toggle("is-open", !isOpen);
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
         });
     }
-    const subpageLinks = document.querySelectorAll("#subpage-nav a");
+    const subpageLinks = subpageNav.querySelectorAll("a");
     subpageLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
             const page = link.getAttribute("data-page");
-            // Allow Home link to navigate normally
+            closeMenu();
+            // Allow links such as index.html to navigate normally.
             if (page === null) {
                 return;
             }
             event.preventDefault();
-            window.location.href = `pages.html?page=${page}`;
+            window.location.href = `pages.html?page=${encodeURIComponent(page)}`;
         });
+    });
+    document.addEventListener("click", (event) => {
+        const target = event.target instanceof Node ? event.target : null;
+        if (target !== null && !subpageNav.contains(target)) {
+            closeMenu();
+        }
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+            menuToggle?.focus();
+        }
+    });
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 }
 function loadPage() {

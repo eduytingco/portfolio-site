@@ -8,44 +8,77 @@ function loadNavbar(): void {
         return;
     }
 
-    // Logo click -> Home page
-    const navLogo: SVGElement | null =
-        document.getElementById("nav-logo") as SVGElement | null;
+    const menuToggle: HTMLButtonElement | null =
+        document.querySelector("#nav-menu-toggle");
 
-    if (navLogo !== null) {
-        navLogo.style.cursor = "pointer";
+    const navMenu: HTMLElement | null =
+        document.getElementById("nav-menu");
 
-        navLogo.addEventListener("click", () => {
-            window.location.href = "index.html";
-        });
+    function closeMenu(): void {
+        if (menuToggle === null || navMenu === null) {
+            return;
+        }
 
-        // Optional: keyboard accessibility if the SVG isn't already inside a link
-        navLogo.setAttribute("tabindex", "0");
-        navLogo.setAttribute("role", "link");
+        menuToggle.classList.remove("is-open");
+        navMenu.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+    }
 
-        navLogo.addEventListener("keydown", (event: KeyboardEvent) => {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                window.location.href = "index.html";
-            }
+    if (menuToggle !== null && navMenu !== null) {
+        menuToggle.addEventListener("click", () => {
+            const isOpen: boolean =
+                menuToggle.getAttribute("aria-expanded") === "true";
+
+            menuToggle.classList.toggle("is-open", !isOpen);
+            navMenu.classList.toggle("is-open", !isOpen);
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Open navigation menu" : "Close navigation menu"
+            );
         });
     }
 
     const subpageLinks: NodeListOf<HTMLAnchorElement> =
-        document.querySelectorAll("#subpage-nav a");
+        subpageNav.querySelectorAll("a");
 
     subpageLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
-            const page = link.getAttribute("data-page");
+            const page: string | null = link.getAttribute("data-page");
 
-            // Allow Home link to navigate normally
+            closeMenu();
+
+            // Allow links such as index.html to navigate normally.
             if (page === null) {
                 return;
             }
 
             event.preventDefault();
-            window.location.href = `pages.html?page=${page}`;
+            window.location.href = `pages.html?page=${encodeURIComponent(page)}`;
         });
+    });
+
+    document.addEventListener("click", (event) => {
+        const target: Node | null =
+            event.target instanceof Node ? event.target : null;
+
+        if (target !== null && !subpageNav.contains(target)) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+            menuToggle?.focus();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 }
 
