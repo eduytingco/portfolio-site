@@ -8,19 +8,51 @@ function loadNavbar(): void {
         return;
     }
 
+    // Logo click -> Home page
+    const navLogo: SVGElement | null =
+        document.getElementById("nav-logo") as SVGElement | null;
+
+    if (navLogo !== null) {
+        navLogo.style.cursor = "pointer";
+
+        navLogo.addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+
+        // Optional: keyboard accessibility if the SVG isn't already inside a link
+        navLogo.setAttribute("tabindex", "0");
+        navLogo.setAttribute("role", "link");
+
+        navLogo.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.href = "index.html";
+            }
+        });
+    }
+
     const subpageLinks: NodeListOf<HTMLAnchorElement> =
         document.querySelectorAll("#subpage-nav a");
 
     subpageLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
+            const page = link.getAttribute("data-page");
+
+            // Allow Home link to navigate normally
+            if (page === null) {
+                return;
+            }
+
             event.preventDefault();
-            const page = link.getAttribute("data-page") ?? "";
             window.location.href = `pages.html?page=${page}`;
         });
     });
 }
+
 function loadPage(): void {
-    const pageId: string | null = new URLSearchParams(window.location.search).get("page");
+    const pageId: string | null =
+        new URLSearchParams(window.location.search).get("page");
+
     const pageContent: HTMLElement | null =
         document.querySelector("[page-id='" + pageId + "'] section");
 
@@ -30,6 +62,7 @@ function loadPage(): void {
 
     pageContent.style.display = "block";
 }
+
 function loadFooter(): void {
     const footerContent: HTMLElement | null =
         document.querySelector("[role='footer-content']");
@@ -43,6 +76,7 @@ function loadFooter(): void {
         new Date().getFullYear().toString()
     );
 }
+
 function loadContent(): void {
     const hero = document.getElementById("hero-content");
     const about = document.getElementById("about-content");
@@ -55,16 +89,20 @@ function loadContent(): void {
 
     hero.innerHTML = `<h1>${getMessage("hero.title")}</h1>
     <p>${getMessage("hero.description")}</p>`;
+
     about.innerHTML = `<h2>${getMessage("about.title")}</h2>
     <p>${getMessage("about.description")}</p>
     <button onclick="window.location.href='pages.html?page=about'">${getMessage("CTA.about")}</button>`;
+
     projects.innerHTML = `<h2>${getMessage("projects.title")}</h2>
     <p>${getMessage("projects.description")}</p>
     <button onclick="window.location.href='pages.html?page=projects'">${getMessage("CTA.projects")}</button>`;
+
     contact.innerHTML = `<h2>${getMessage("contact.title")}</h2>
     <p>${getMessage("contact.description")}</p>
     <button onclick="window.location.href='pages.html?page=contact'">${getMessage("CTA.contact")}</button>`;
 }
+
 async function init(): Promise<void> {
     await loadMessages("en");
     loadNavbar();

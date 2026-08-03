@@ -4,11 +4,32 @@ function loadNavbar() {
     if (subpageNav === null) {
         return;
     }
+    // Logo click -> Home page
+    const navLogo = document.getElementById("nav-logo");
+    if (navLogo !== null) {
+        navLogo.style.cursor = "pointer";
+        navLogo.addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+        // Optional: keyboard accessibility if the SVG isn't already inside a link
+        navLogo.setAttribute("tabindex", "0");
+        navLogo.setAttribute("role", "link");
+        navLogo.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.href = "index.html";
+            }
+        });
+    }
     const subpageLinks = document.querySelectorAll("#subpage-nav a");
     subpageLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
+            const page = link.getAttribute("data-page");
+            // Allow Home link to navigate normally
+            if (page === null) {
+                return;
+            }
             event.preventDefault();
-            const page = link.getAttribute("data-page") ?? "";
             window.location.href = `pages.html?page=${page}`;
         });
     });
