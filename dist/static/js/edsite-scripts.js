@@ -1,147 +1,94 @@
 import { loadMessages, getMessage } from "./i18n.js";
 function loadNavbar() {
-    const subpageNav = document.getElementById("subpage-nav");
-    if (subpageNav === null) {
+    const nav = document.getElementById("subpage-nav");
+    const toggle = document.querySelector("#nav-menu-toggle");
+    const menu = document.getElementById("nav-menu");
+    if (nav === null || toggle === null || menu === null) {
         return;
     }
-    const menuToggle = document.querySelector("#nav-menu-toggle");
-    const navMenu = document.getElementById("nav-menu");
+    const navElement = nav;
+    const toggleButton = toggle;
+    const navMenu = menu;
     function closeMenu() {
-        if (menuToggle === null || navMenu === null) {
-            return;
-        }
-        menuToggle.classList.remove("is-open");
+        toggleButton.classList.remove("is-open");
         navMenu.classList.remove("is-open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        toggleButton.setAttribute("aria-expanded", "false");
+        toggleButton.setAttribute("aria-label", "Open navigation menu");
     }
-    if (menuToggle !== null && navMenu !== null) {
-        menuToggle.addEventListener("click", () => {
-            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-            menuToggle.classList.toggle("is-open", !isOpen);
-            navMenu.classList.toggle("is-open", !isOpen);
-            menuToggle.setAttribute("aria-expanded", String(!isOpen));
-            menuToggle.setAttribute("aria-label", isOpen
-                ? "Open navigation menu"
-                : "Close navigation menu");
-        });
-    }
-    const subpageLinks = subpageNav.querySelectorAll("a");
-    subpageLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-            const page = link.getAttribute("data-page");
-            closeMenu();
-            /*
-             * Allow links without data-page, such as index.html,
-             * to navigate normally.
-             */
-            if (page === null) {
-                return;
-            }
-            event.preventDefault();
-            window.location.href =
-                `pages.html?page=${encodeURIComponent(page)}`;
-        });
+    toggleButton.addEventListener("click", () => {
+        const isOpen = toggleButton.getAttribute("aria-expanded") === "true";
+        toggleButton.classList.toggle("is-open", !isOpen);
+        navMenu.classList.toggle("is-open", !isOpen);
+        toggleButton.setAttribute("aria-expanded", String(!isOpen));
+        toggleButton.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+    });
+    navElement.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
     });
     document.addEventListener("click", (event) => {
-        const target = event.target instanceof Node
-            ? event.target
-            : null;
-        if (target !== null &&
-            !subpageNav.contains(target)) {
+        const target = event.target instanceof Node ? event.target : null;
+        if (target !== null && !navElement.contains(target)) {
             closeMenu();
         }
     });
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
             closeMenu();
-            menuToggle?.focus();
+            toggleButton.focus();
         }
     });
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 768) {
-            closeMenu();
-        }
-    });
-}
-function loadPage() {
-    const pageId = new URLSearchParams(window.location.search).get("page");
-    if (pageId === null) {
-        return;
-    }
-    const pageContent = document.querySelector(`[page-id="${CSS.escape(pageId)}"] section`);
-    if (pageContent === null) {
-        return;
-    }
-    pageContent.style.display = "block";
 }
 function loadParallax() {
-    const heroImage = document.querySelector(".hero-image");
-    if (heroImage === null) {
-        return;
-    }
     const root = document.documentElement;
     let ticking = false;
-    function updateParallax() {
+    function update() {
         root.style.setProperty("--scroll", window.scrollY.toString());
         ticking = false;
     }
-    function requestParallaxUpdate() {
-        if (ticking) {
-            return;
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(update);
         }
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
-    }
-    window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
-    updateParallax();
+    }, { passive: true });
+    update();
 }
-function setText(elementId, messageKey) {
-    const element = document.getElementById(elementId);
-    if (element === null) {
-        return;
+function setText(id, key) {
+    const element = document.getElementById(id);
+    if (element !== null) {
+        element.textContent = getMessage(key);
     }
-    element.textContent = getMessage(messageKey);
 }
 function loadContent() {
-    setText("hero-title", "hero.title");
-    setText("about-title", "about.title");
-    setText("about-description", "about.description");
-    setText("about-button", "CTA.about");
-    setText("projects-title", "projects.title");
-    setText("projects-description", "projects.description");
-    setText("projects-button", "CTA.projects");
-    setText("contact-title", "contact.title");
-    setText("contact-description", "contact.description");
-    setText("contact-button", "CTA.contact");
-    const heroTagline = document.querySelector(".hero-tagline");
-    const heroDescription = document.querySelector(".hero-description");
-    const heroButton = document.querySelector(".hero-button");
-    if (heroTagline !== null) {
-        heroTagline.textContent =
-            getMessage("hero.tagline");
-    }
-    if (heroDescription !== null) {
-        heroDescription.textContent =
-            getMessage("hero.description");
-    }
-    if (heroButton !== null) {
-        heroButton.textContent =
-            getMessage("hero.button");
-    }
+    [
+        ["hero-tagline", "hero.tagline"],
+        ["hero-title", "hero.title"],
+        ["hero-description", "hero.description"],
+        ["hero-button", "hero.button"],
+        ["about-title", "about.title"],
+        ["about-description", "about.description"],
+        ["about-button", "CTA.about"],
+        ["projects-title", "projects.title"],
+        ["projects-description", "projects.description"],
+        ["projects-button", "CTA.projects"],
+        ["experience-title", "experience.title"],
+        ["experience-description", "experience.description"],
+        ["experience-button", "CTA.experience"],
+        ["contact-title", "contact.title"],
+        ["contact-description", "contact.description"],
+        ["contact-button", "CTA.contact"]
+    ].forEach(([id, key]) => setText(id, key));
 }
 function loadFooter() {
-    const footerContent = document.getElementById("footer-content");
-    if (footerContent === null) {
-        return;
+    const footer = document.getElementById("footer-content");
+    if (footer !== null) {
+        footer.textContent = getMessage("footer.text", new Date().getFullYear().toString());
     }
-    footerContent.textContent = getMessage("footer.text", new Date().getFullYear().toString());
 }
 async function init() {
     try {
         await loadMessages("en");
         loadNavbar();
-        loadPage();
         loadParallax();
         loadContent();
         loadFooter();

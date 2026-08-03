@@ -5,109 +5,87 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Ed Uytingco Online Portfolio</title>
-
     <link rel="stylesheet" href="src/static/css/edsite-styles.css" />
     <script src="dist/static/js/edsite-scripts.js" type="module"></script>
 </head>
 
 <body>
-    <main>
-        <section id="hero" aria-labelledby="hero-title">
-            <img
-                src="src/static/images/Ed-hero-cover.JPEG"
-                class="hero-image"
-                alt="Ed Uytingco standing in a field at sunset"
-            />
+    <header class="site-header">
+        <nav id="subpage-nav" class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="index.html" aria-label="Ed Uytingco home">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <span class="brand-name">Ed Uytingco</span>
+            </a>
+            <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false"
+                aria-controls="nav-menu" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <main>
+        <section id="hero" class="hero" aria-labelledby="hero-title">
+            <img class="hero-image" src="src/static/images/ed-hero-cover.png"
+                alt="Ed Uytingco standing outdoors with a hillside neighborhood in the background" />
             <div class="hero-gradient" aria-hidden="true"></div>
 
-            <div class="hero-content">
-                <p class="hero-tagline"></p>
-
-                <h1 id="hero-title"></h1>
-
-                <p class="hero-description"></p>
-
-                <a
-                    href="#projects"
-                    class="hero-button"
-                ></a>
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <p id="hero-tagline" class="hero-tagline"></p>
+                    <h1 id="hero-title"></h1>
+                    <p id="hero-description" class="hero-description"></p>
+                    <a id="hero-button" class="hero-button" href="#projects">
+                        <span></span><span aria-hidden="true">→</span>
+                    </a>
+                </div>
             </div>
 
-            <a
-                href="#about"
-                class="scroll-indicator"
-                aria-label="Scroll to the About section"
-            >
-                <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    focusable="false"
-                >
-                    <path
-                        d="M6 9l6 6 6-6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
+            <a class="scroll-indicator" href="#quick-links" aria-label="Scroll to the portfolio sections">
+                <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
             </a>
         </section>
 
-        <section id="about" aria-labelledby="about-title">
-            <div id="about-content" class="container">
-                <h2 id="about-title"></h2>
-
-                <p id="about-description"></p>
-
-                <a
-                    id="about-button"
-                    class="section-button"
-                    href="pages.html?page=about"
-                ></a>
-            </div>
-        </section>
-
-        <section id="projects" aria-labelledby="projects-title">
-            <div id="projects-content" class="container">
-                <h2 id="projects-title"></h2>
-
-                <p id="projects-description"></p>
-
-                <a
-                    id="projects-button"
-                    class="section-button"
-                    href="pages.html?page=projects"
-                ></a>
-            </div>
-        </section>
-
-        <section id="contact" aria-labelledby="contact-title">
-            <div id="contact-content" class="container">
-                <h2 id="contact-title"></h2>
-
-                <p id="contact-description"></p>
-
-                <a
-                    id="contact-button"
-                    class="section-button"
-                    href="pages.html?page=contact"
-                ></a>
+        <section id="quick-links" class="quick-links" aria-label="Portfolio sections">
+            <div class="quick-links-grid">
+                <article id="about" class="quick-card">
+                    <div class="quick-card-icon" aria-hidden="true">◎</div>
+                    <h2 id="about-title"></h2>
+                    <p id="about-description"></p>
+                    <a id="about-button" href="pages.html?page=about"></a>
+                </article>
+                <article id="projects" class="quick-card">
+                    <div class="quick-card-icon" aria-hidden="true">⊞</div>
+                    <h2 id="projects-title"></h2>
+                    <p id="projects-description"></p>
+                    <a id="projects-button" href="pages.html?page=projects"></a>
+                </article>
+                <article id="experience" class="quick-card">
+                    <div class="quick-card-icon quick-card-icon-code" aria-hidden="true">&lt;/&gt;</div>
+                    <h2 id="experience-title"></h2>
+                    <p id="experience-description"></p>
+                    <a id="experience-button" href="pages.html?page=experience"></a>
+                </article>
+                <article id="contact" class="quick-card">
+                    <div class="quick-card-icon" aria-hidden="true">□</div>
+                    <h2 id="contact-title"></h2>
+                    <p id="contact-description"></p>
+                    <a id="contact-button" href="pages.html?page=contact"></a>
+                </article>
             </div>
         </section>
     </main>
 
-    <footer id="footer">
-        <div class="container">
-            <span id="footer-content"></span>
-        </div>
-    </footer>
+    <footer id="footer"><span role="footer-content"></span></footer>
 </body>
 
 </html>
