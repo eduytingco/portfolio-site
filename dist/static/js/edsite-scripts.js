@@ -21,7 +21,9 @@ function loadNavbar() {
             menuToggle.classList.toggle("is-open", !isOpen);
             navMenu.classList.toggle("is-open", !isOpen);
             menuToggle.setAttribute("aria-expanded", String(!isOpen));
-            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+            menuToggle.setAttribute("aria-label", isOpen
+                ? "Open navigation menu"
+                : "Close navigation menu");
         });
     }
     const subpageLinks = subpageNav.querySelectorAll("a");
@@ -29,17 +31,24 @@ function loadNavbar() {
         link.addEventListener("click", (event) => {
             const page = link.getAttribute("data-page");
             closeMenu();
-            // Allow links such as index.html to navigate normally.
+            /*
+             * Allow links without data-page, such as index.html,
+             * to navigate normally.
+             */
             if (page === null) {
                 return;
             }
             event.preventDefault();
-            window.location.href = `pages.html?page=${encodeURIComponent(page)}`;
+            window.location.href =
+                `pages.html?page=${encodeURIComponent(page)}`;
         });
     });
     document.addEventListener("click", (event) => {
-        const target = event.target instanceof Node ? event.target : null;
-        if (target !== null && !subpageNav.contains(target)) {
+        const target = event.target instanceof Node
+            ? event.target
+            : null;
+        if (target !== null &&
+            !subpageNav.contains(target)) {
             closeMenu();
         }
     });
@@ -57,45 +66,89 @@ function loadNavbar() {
 }
 function loadPage() {
     const pageId = new URLSearchParams(window.location.search).get("page");
-    const pageContent = document.querySelector("[page-id='" + pageId + "'] section");
+    if (pageId === null) {
+        return;
+    }
+    const pageContent = document.querySelector(`[page-id="${CSS.escape(pageId)}"] section`);
     if (pageContent === null) {
         return;
     }
     pageContent.style.display = "block";
 }
+function loadParallax() {
+    const heroImage = document.querySelector(".hero-image");
+    if (heroImage === null) {
+        return;
+    }
+    const root = document.documentElement;
+    let ticking = false;
+    function updateParallax() {
+        root.style.setProperty("--scroll", window.scrollY.toString());
+        ticking = false;
+    }
+    function requestParallaxUpdate() {
+        if (ticking) {
+            return;
+        }
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+    window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
+    updateParallax();
+}
+function setText(elementId, messageKey) {
+    const element = document.getElementById(elementId);
+    if (element === null) {
+        return;
+    }
+    element.textContent = getMessage(messageKey);
+}
+function loadContent() {
+    setText("hero-title", "hero.title");
+    setText("about-title", "about.title");
+    setText("about-description", "about.description");
+    setText("about-button", "CTA.about");
+    setText("projects-title", "projects.title");
+    setText("projects-description", "projects.description");
+    setText("projects-button", "CTA.projects");
+    setText("contact-title", "contact.title");
+    setText("contact-description", "contact.description");
+    setText("contact-button", "CTA.contact");
+    const heroTagline = document.querySelector(".hero-tagline");
+    const heroDescription = document.querySelector(".hero-description");
+    const heroButton = document.querySelector(".hero-button");
+    if (heroTagline !== null) {
+        heroTagline.textContent =
+            getMessage("hero.tagline");
+    }
+    if (heroDescription !== null) {
+        heroDescription.textContent =
+            getMessage("hero.description");
+    }
+    if (heroButton !== null) {
+        heroButton.textContent =
+            getMessage("hero.button");
+    }
+}
 function loadFooter() {
-    const footerContent = document.querySelector("[role='footer-content']");
+    const footerContent = document.getElementById("footer-content");
     if (footerContent === null) {
         return;
     }
     footerContent.textContent = getMessage("footer.text", new Date().getFullYear().toString());
 }
-function loadContent() {
-    const hero = document.getElementById("hero-content");
-    const about = document.getElementById("about-content");
-    const projects = document.getElementById("projects-content");
-    const contact = document.getElementById("contact-content");
-    if (hero === null || about === null || projects === null || contact === null) {
-        return;
-    }
-    hero.innerHTML = `<h1>${getMessage("hero.title")}</h1>
-    <p>${getMessage("hero.description")}</p>`;
-    about.innerHTML = `<h2>${getMessage("about.title")}</h2>
-    <p>${getMessage("about.description")}</p>
-    <button onclick="window.location.href='pages.html?page=about'">${getMessage("CTA.about")}</button>`;
-    projects.innerHTML = `<h2>${getMessage("projects.title")}</h2>
-    <p>${getMessage("projects.description")}</p>
-    <button onclick="window.location.href='pages.html?page=projects'">${getMessage("CTA.projects")}</button>`;
-    contact.innerHTML = `<h2>${getMessage("contact.title")}</h2>
-    <p>${getMessage("contact.description")}</p>
-    <button onclick="window.location.href='pages.html?page=contact'">${getMessage("CTA.contact")}</button>`;
-}
 async function init() {
-    await loadMessages("en");
-    loadNavbar();
-    loadPage();
-    loadContent();
-    loadFooter();
+    try {
+        await loadMessages("en");
+        loadNavbar();
+        loadPage();
+        loadParallax();
+        loadContent();
+        loadFooter();
+    }
+    catch (error) {
+        console.error("Unable to initialize the website:", error);
+    }
 }
 document.addEventListener("DOMContentLoaded", () => {
     void init();
