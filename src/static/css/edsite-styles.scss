@@ -4,7 +4,8 @@
     --muted: rgb(255 255 255 / 78%);
     --surface: #f7f6f2;
     --surface-text: #222;
-    --scroll: 0
+    --scroll: 0;
+    --default-bg: #000;
 }
 
 *,
@@ -369,6 +370,7 @@ main {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 1.5rem
 }
+
 [page-id] #subpage-hero {
     background: var(--surface);
     background-image: url(/src/static/images/edsite-subpage-hero-about.PNG);
@@ -377,20 +379,48 @@ main {
 }
 
 [page-id="about"] #subpage-hero {
-    background-image: url(/src/static/images/edsite-subpage-hero-about.PNG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-about.PNG);
 }
+
 [page-id="projects"] #subpage-hero {
-    background-image: url(/src/static/images/edsite-subpage-hero-projects.PNG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-projects.PNG);
 }
+
 [page-id="contact"] #subpage-hero {
-    background-image: url(/src/static/images/edsite-subpage-hero-contact.PNG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-contact.PNG);
 }
+
 [page-id="experience"] #subpage-hero {
-    background-image: url(/src/static/images/edsite-subpage-hero-experience.PNG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-experience.PNG);
+}
+
+#subpage-hero {
+    display: flex;
+    flex-direction: row;
+    height: 22vh;
+    background-color: var(--default-bg);
+}
+
+#subpage-hero-title {
+    padding: 0;
+    color: white;
+    font-size: 64px;
+    margin: 0 0 -102px;
+}
+
+#subpage-hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: min(92%, 1450px);
+    height: 100%;
+    padding-top: 4rem
 }
 
 section {
-    padding: 4rem 0;
+    &:not(.quick-links) {
+        padding: 0;
+    }
 }
 
 .container {
