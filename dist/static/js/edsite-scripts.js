@@ -101,12 +101,12 @@ function loadContent() {
 function loadFooter() {
     const footer = document.querySelector("[role=footer-content]");
     if (footer !== null) {
-        footer.textContent = getMessage("footer.text", new Date().getFullYear().toString());
+        footer.textContent = getMessage("footer.text");
     }
 }
 async function init() {
     try {
-        await loadMessages("en");
+        await loadMessages();
         loadNavbar();
         loadParallax();
         loadContent();
