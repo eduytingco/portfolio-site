@@ -1,29 +1,54 @@
 const messages = new Map();
 function parseProperties(content) {
-    for (const rawLine of content.split(/\r?\n/)) {
-        const line = rawLine.trim();
-        if (!line || line.startsWith("#") || line.startsWith("!")) {
-            continue;
+    const parsedMessages = new Map();
+    content.split(/\r?\n/).forEach((line) => {
+        const trimmedLine = line.trim();
+        if (trimmedLine.length === 0 ||
+            trimmedLine.startsWith("#") ||
+            trimmedLine.startsWith("!")) {
+            return;
         }
-        const separator = line.search(/[:=]/);
-        if (separator === -1) {
-            continue;
+        const separatorIndex = trimmedLine.search(/[=:]/);
+        if (separatorIndex === -1) {
+            return;
         }
-        messages.set(line.slice(0, separator).trim(), line.slice(separator + 1).trim());
-    }
+        const key = trimmedLine
+            .slice(0, separatorIndex)
+            .trim();
+        const value = trimmedLine
+            .slice(separatorIndex + 1)
+            .trim()
+            .replace(/\\n/g, "\n")
+            .replace(/\\t/g, "\t")
+            .replace(/\\=/g, "=")
+            .replace(/\\:/g, ":");
+        if (key.length > 0) {
+            parsedMessages.set(key, value);
+        }
+    });
+    return parsedMessages;
 }
-export async function loadMessages(locale) {
-    const response = await fetch(`../../src/static/language/messages.${locale}.properties`);
+export async function loadMessages() {
+    const response = await fetch("/src/static/language/messages.en.properties", {
+        cache: "no-cache",
+    });
     if (!response.ok) {
         throw new Error(`Unable to load messages: ${response.status} ${response.statusText}`);
     }
-    parseProperties(await response.text());
-}
-export function getMessage(key, ...values) {
-    let message = messages.get(key) ?? key;
-    values.forEach((value, index) => {
-        message = message.replace(`{${index}}`, value);
+    const content = await response.text();
+    const parsedMessages = parseProperties(content);
+    messages.clear();
+    parsedMessages.forEach((value, key) => {
+        messages.set(key, value);
     });
+    console.info(`Loaded ${messages.size} language messages.`);
+}
+export function getMessage(key) {
+    const message = messages.get(key);
+    if (message === undefined) {
+        console.warn(`Missing message key: ${key}`);
+        return key;
+    }
     return message;
 }
 //# sourceMappingURL=i18n.js.map

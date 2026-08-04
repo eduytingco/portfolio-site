@@ -1,46 +1,80 @@
-const messages: Map<string, string> = new Map();
+const messages: Map<string, string> = new Map<string, string>();
 
-function parseProperties(content: string): void {
-    for (const rawLine of content.split(/\r?\n/)) {
-        const line = rawLine.trim();
+function parseProperties(content: string): Map<string, string> {
+    const parsedMessages: Map<string, string> =
+        new Map<string, string>();
 
-        if (!line || line.startsWith("#") || line.startsWith("!")) {
-            continue;
+    content.split(/\r?\n/).forEach((line: string) => {
+        const trimmedLine: string = line.trim();
+
+        if (
+            trimmedLine.length === 0 ||
+            trimmedLine.startsWith("#") ||
+            trimmedLine.startsWith("!")
+        ) {
+            return;
         }
 
-        const separator = line.search(/[:=]/);
+        const separatorIndex: number = trimmedLine.search(/[=:]/);
 
-        if (separator === -1) {
-            continue;
+        if (separatorIndex === -1) {
+            return;
         }
 
-        messages.set(
-            line.slice(0, separator).trim(),
-            line.slice(separator + 1).trim()
-        );
-    }
+        const key: string = trimmedLine
+            .slice(0, separatorIndex)
+            .trim();
+
+        const value: string = trimmedLine
+            .slice(separatorIndex + 1)
+            .trim()
+            .replace(/\\n/g, "\n")
+            .replace(/\\t/g, "\t")
+            .replace(/\\=/g, "=")
+            .replace(/\\:/g, ":");
+
+        if (key.length > 0) {
+            parsedMessages.set(key, value);
+        }
+    });
+
+    return parsedMessages;
 }
 
-export async function loadMessages(locale: string): Promise<void> {
-    const response = await fetch(
-        `../../src/static/language/messages.${locale}.properties`
+export async function loadMessages(): Promise<void> {
+    const response: Response = await fetch(
+        "/src/static/language/messages.en.properties",
+        {
+            cache: "no-cache",
+        },
     );
 
     if (!response.ok) {
         throw new Error(
-            `Unable to load messages: ${response.status} ${response.statusText}`
+            `Unable to load messages: ${response.status} ${response.statusText}`,
         );
     }
 
-    parseProperties(await response.text());
+    const content: string = await response.text();
+    const parsedMessages: Map<string, string> =
+        parseProperties(content);
+
+    messages.clear();
+
+    parsedMessages.forEach((value: string, key: string) => {
+        messages.set(key, value);
+    });
+
+    console.info(`Loaded ${messages.size} language messages.`);
 }
 
-export function getMessage(key: string, ...values: string[]): string {
-    let message = messages.get(key) ?? key;
+export function getMessage(key: string): string {
+    const message: string | undefined = messages.get(key);
 
-    values.forEach((value, index) => {
-        message = message.replace(`{${index}}`, value);
-    });
+    if (message === undefined) {
+        console.warn(`Missing message key: ${key}`);
+        return key;
+    }
 
     return message;
 }
