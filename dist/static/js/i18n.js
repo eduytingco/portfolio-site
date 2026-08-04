@@ -13,7 +13,7 @@ function parseProperties(content) {
     }
 }
 export async function loadMessages(locale) {
-    const response = await fetch(`src/static/language/messages.${locale}.properties`);
+    const response = await fetch(`../../src/static/language/messages.${locale}.properties`);
     if (!response.ok) {
         throw new Error(`Unable to load messages: ${response.status} ${response.statusText}`);
     }
