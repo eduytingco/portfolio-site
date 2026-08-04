@@ -23,7 +23,7 @@ function parseProperties(content: string): void {
 
 export async function loadMessages(locale: string): Promise<void> {
     const response = await fetch(
-        `src/static/language/messages.${locale}.properties`
+        `../../src/static/language/messages.${locale}.properties`
     );
 
     if (!response.ok) {
