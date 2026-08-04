@@ -8,26 +8,27 @@
     <link rel="stylesheet" href="src/static/css/edsite-styles.css" />
     <title>Ed Uytingco Online Portfolio</title>
 </head>
-<header>
-    <nav id="subpage-nav" class="site-nav subpage" aria-label="Primary navigation">
-        <a class="brand" href="index.html" aria-label="Ed Uytingco home">
-            <span class="brand-mark" aria-hidden="true">E</span>
-            <span class="brand-name">Ed Uytingco</span>
-        </a>
-        <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false"
-            aria-controls="nav-menu" aria-label="Open navigation menu">
-            <span></span><span></span><span></span>
-        </button>
-        <ul id="nav-menu" class="nav-menu">
-            <li><a href="pages.html?page=about">About</a></li>
-            <li><a href="pages.html?page=projects">Projects</a></li>
-            <li><a href="pages.html?page=experience">Experience</a></li>
-            <li><a href="pages.html?page=contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
 
 <body>
+    <header>
+        <nav id="subpage-nav" class="site-nav subpage" aria-label="Primary navigation">
+            <a class="brand" href="index.html" aria-label="Ed Uytingco home" title="Ed Uytingco Online Portfolio Home">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <span class="brand-name">Ed Uytingco</span>
+            </a>
+            <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false"
+                aria-controls="nav-menu" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="pages.html?page=about" nav-link-id="about">{nav.about}</a></li>
+                <li><a href="pages.html?page=projects" nav-link-id="projects">{nav.projects}</a></li>
+                <li><a href="pages.html?page=experience" nav-link-id="experience">{nav.experience}</a></li>
+                <li><a href="pages.html?page=contact" nav-link-id="contact">{nav.contact}</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main role="subpage" page-id="">
         <section id="subpage-hero">
             <div id="subpage-hero-content" class="container">
@@ -36,14 +37,14 @@
         </section>
         <section id="subpage-content">
             <div id="subpage-content-container" class="container">
-                <h2 id="subpage-content-title"></h2>
                 <p id="subpage-content-description"></p>
             </div>
+        </section>
     </main>
+    <footer>
+        <section id="footer-subpage"><span id="footer-subpage-content" role="footer-content"></span></section>
+    </footer>
+    <script src="dist/static/js/edsite-scripts.js" type="module"></script>
 </body>
-<footer>
-    <section id="footer-subpage"><span id="footer-subpage-content" role="footer-content"></span></section>
-</footer>
-<script src="dist/static/js/edsite-scripts.js" type="module"></script>
 
 </html>

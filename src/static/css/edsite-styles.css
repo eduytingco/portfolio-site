@@ -416,6 +416,18 @@ section:not(.quick-links) {
   width: min(92%, 1450px);
   margin: 0 auto;
 }
+.container#subpage-content-container {
+  padding: 2rem 0 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container#subpage-content-container p {
+  margin: 0 0 1.5rem;
+  color: var(--surface-text);
+  font-size: 1rem;
+  line-height: 1.55;
+}
 
 footer {
   padding: 1rem;

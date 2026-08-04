@@ -427,6 +427,20 @@ section {
 .container {
     width: min(92%, 1450px);
     margin: 0 auto;
+
+    &#subpage-content-container {
+        padding: 2rem 0 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        p {
+            margin: 0 0 1.5rem;
+            color: var(--surface-text);
+            font-size: 1rem;
+            line-height: 1.55
+        }
+    }
 }
 
 footer {
