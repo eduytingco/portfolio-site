@@ -60,6 +60,9 @@ img {
   width: min(92%, 1450px);
   margin: 0 auto;
 }
+.site-nav.subpage {
+  padding: 22px 0;
+}
 
 .brand {
   display: inline-flex;
@@ -158,6 +161,7 @@ img {
 
 main {
   flex: 1;
+  background-color: #fff;
 }
 
 .hero {
@@ -245,6 +249,7 @@ main {
   padding: 1.1rem 1.75rem;
   color: var(--accent);
   text-decoration: none;
+  text-align: center;
   border: 1px solid var(--accent);
   font-size: 0.95rem;
   font-weight: 700;
@@ -282,6 +287,14 @@ main {
   margin: 0 auto;
 }
 
+.quick-card-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: row;
+  justify-content: baseline;
+}
+
 .quick-card {
   min-height: 235px;
   padding: 2.2rem 2.5rem 2rem;
@@ -296,7 +309,6 @@ main {
 }
 
 .quick-card h2 {
-  margin: -2.1rem 0 1rem 3.3rem;
   font-size: 1rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -337,6 +349,7 @@ main {
   color: #b37d12;
   font-size: 2rem;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .quick-card-icon-code {

@@ -80,7 +80,7 @@ function loadContent() {
     ].forEach(([id, key]) => setText(id, key));
 }
 function loadFooter() {
-    const footer = document.getElementById("footer-content");
+    const footer = document.querySelector("[role=footer-content]");
     if (footer !== null) {
         footer.textContent = getMessage("footer.text", new Date().getFullYear().toString());
     }

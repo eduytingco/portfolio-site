@@ -98,7 +98,7 @@ function loadContent(): void {
 }
 
 function loadFooter(): void {
-    const footer = document.getElementById("footer-content");
+    const footer = document.querySelector("[role=footer-content]");
     if (footer !== null) {
         footer.textContent = getMessage(
             "footer.text",

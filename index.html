@@ -22,17 +22,17 @@
                 <span></span><span></span><span></span>
             </button>
             <ul id="nav-menu" class="nav-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="pages.html?page=about">About</a></li>
+                <li><a href="pages.html?page=projects">Projects</a></li>
+                <li><a href="pages.html?page=experience">Experience</a></li>
+                <li><a href="pages.html?page=contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="hero" class="hero" aria-labelledby="hero-title">
-            <img class="hero-image" src="src/static/images/Ed-hero-pic.JPEG"
+            <img class="hero-image" src="src/static/images/Ed-hero-cover.png"
                 alt="Ed Uytingco standing outdoors with a hillside neighborhood in the background" />
             <div class="hero-gradient" aria-hidden="true"></div>
 
@@ -41,7 +41,8 @@
                     <p id="hero-tagline" class="hero-tagline"></p>
                     <h1 id="hero-title"></h1>
                     <p id="hero-description" class="hero-description"></p>
-                    <a id="hero-button" class="hero-button" href="#projects">
+                    <a id="hero-button" class="hero-button" href="pages.html?page=projects"
+                        aria-label="View my portfolio">
                         <span></span><span aria-hidden="true">→</span>
                     </a>
                 </div>
@@ -58,26 +59,34 @@
         <section id="quick-links" class="quick-links" aria-label="Portfolio sections">
             <div class="quick-links-grid">
                 <article id="about" class="quick-card">
-                    <div class="quick-card-icon" aria-hidden="true">◎</div>
-                    <h2 id="about-title"></h2>
+                    <div class="quick-card-container">
+                        <div class="quick-card-icon" aria-hidden="true">◎</div>
+                        <h2 id="about-title"></h2>
+                    </div>
                     <p id="about-description"></p>
                     <a id="about-button" href="pages.html?page=about"></a>
                 </article>
                 <article id="projects" class="quick-card">
-                    <div class="quick-card-icon" aria-hidden="true">⊞</div>
-                    <h2 id="projects-title"></h2>
+                    <div class="quick-card-container">
+                        <div class="quick-card-icon" aria-hidden="true">⊞</div>
+                        <h2 id="projects-title"></h2>
+                    </div>
                     <p id="projects-description"></p>
                     <a id="projects-button" href="pages.html?page=projects"></a>
                 </article>
                 <article id="experience" class="quick-card">
-                    <div class="quick-card-icon quick-card-icon-code" aria-hidden="true">&lt;/&gt;</div>
-                    <h2 id="experience-title"></h2>
+                    <div class="quick-card-container">
+                        <div class="quick-card-icon quick-card-icon-code" aria-hidden="true">&lt;/&gt;</div>
+                        <h2 id="experience-title"></h2>
+                    </div>
                     <p id="experience-description"></p>
                     <a id="experience-button" href="pages.html?page=experience"></a>
                 </article>
                 <article id="contact" class="quick-card">
-                    <div class="quick-card-icon" aria-hidden="true">□</div>
-                    <h2 id="contact-title"></h2>
+                    <div class="quick-card-container">
+                        <div class="quick-card-icon" aria-hidden="true">&#x2709;</div>
+                        <h2 id="contact-title"></h2>
+                    </div>
                     <p id="contact-description"></p>
                     <a id="contact-button" href="pages.html?page=contact"></a>
                 </article>
