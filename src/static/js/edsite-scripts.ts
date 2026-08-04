@@ -98,14 +98,19 @@ function loadContent(): void {
         ["experience-button", "CTA.experience"],
         ["contact-title", "contact.title"],
         ["contact-description", "contact.description"],
-        ["contact-button", "CTA.contact"]
+        ["contact-button", "CTA.contact"],
+        ["footer-text", "footer.text"],
+        ["nav-about", "nav.about"],
+        ["nav-projects", "nav.projects"],
+        ["nav-experience", "nav.experience"],
+        ["nav-contact", "nav.contact"]
+
     ].forEach(([id, key]) => setText(id, key));
     const pageidelement = document.querySelector("[page-id]");
     if (pageidelement) {
         pageidelement.setAttribute("page-id", pageId());
-    } else {
-        throw new Error("Unable to find page-id element");
-    }
+    } 
+
     const pageTitle = document.getElementById("page-title");
     const subpageHeroTitle = document.getElementById("subpage-hero-title");
     if (pageTitle !== null) {
@@ -114,19 +119,72 @@ function loadContent(): void {
     if (subpageHeroTitle !== null) {
         subpageHeroTitle.innerHTML = getMessage(`page.${pageId()}.title`);
     }
+
+    const subpageContentTitle = document.getElementById("subpage-content-title");
+    const subpageContentDescription = document.getElementById("subpage-content-description");
+    if (subpageContentTitle !== null) {
+        subpageContentTitle.textContent = getMessage(`page.${pageId()}.title`);
+    }
+    if (subpageContentDescription !== null) {
+        subpageContentDescription.textContent = getMessage(`page.${pageId()}.description`);
+    }
+
+    const subpageHeroButton = document.getElementById("subpage-hero-button");
+    const subpageContentButton = document.getElementById("subpage-content-button");
+    if (subpageHeroButton !== null) {
+        subpageHeroButton.textContent = getMessage(`CTA.${pageId()}`);
+    }
+    if (subpageContentButton !== null) {
+        subpageContentButton.textContent = getMessage(`CTA.${pageId()}`);
+    }
+
+    const subpageNav = document.getElementById("subpage-nav");
+    if (subpageNav !== null) {
+        subpageNav.setAttribute("aria-label", getMessage(`nav.${pageId()}`));
+    }
+
+    const navMenu = document.getElementById("nav-menu");
+    if (navMenu !== null) {
+        navMenu.setAttribute("aria-label", getMessage(`nav.${pageId()}`));
+    }
+
+    const subpageFooter = document.getElementById("subpage-footer");
+    if (subpageFooter !== null) {
+        subpageFooter.setAttribute("aria-label", getMessage(`footer.${pageId()}`));
+    }
+
+    const subpageFooterContent = document.getElementById("subpage-footer-content");
+    if (subpageFooterContent !== null) {
+        subpageFooterContent.textContent = getMessage(`footer.${pageId()}`);
+    }
 }
 
+function loadNavigation(): void {
+    const navLinks = document.querySelectorAll("[nav-link-id]");
+    navLinks.forEach((link) => {
+        const navLinkId = link.getAttribute("nav-link-id");
+        if (navLinkId !== null) {
+            link.textContent = getMessage(`nav.${navLinkId}`);
+        }
+    });
+}   
+
 function loadFooter(): void {
-    const footer = document.querySelector("[role=footer-content]");
-    if (footer !== null) {
-        footer.textContent = getMessage("footer.text");
+    const footerContent = document.querySelector("[role=footer-content]") || document.getElementById("footer-content");
+
+    if (footerContent === null) {
+        return;
     }
+
+    footerContent.textContent = getMessage("footer.text")
+        .replace("{0}", String(new Date().getFullYear()));
 }
 
 async function init(): Promise<void> {
     try {
         await loadMessages();
         loadNavbar();
+        loadNavigation();
         loadParallax();
         loadContent();
         loadFooter();
