@@ -53,6 +53,10 @@ function loadParallax() {
     }, { passive: true });
     update();
 }
+function pageId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("page") || "home";
+}
 function setText(id, key) {
     const element = document.getElementById(id);
     if (element !== null) {
@@ -78,6 +82,21 @@ function loadContent() {
         ["contact-description", "contact.description"],
         ["contact-button", "CTA.contact"]
     ].forEach(([id, key]) => setText(id, key));
+    const pageidelement = document.querySelector("[page-id]");
+    if (pageidelement) {
+        pageidelement.setAttribute("page-id", pageId());
+    }
+    else {
+        throw new Error("Unable to find page-id element");
+    }
+    const pageTitle = document.getElementById("page-title");
+    const subpageHeroTitle = document.getElementById("subpage-hero-title");
+    if (pageTitle !== null) {
+        pageTitle.textContent = getMessage(`page.${pageId()}.title`);
+    }
+    if (subpageHeroTitle !== null) {
+        subpageHeroTitle.innerHTML = getMessage(`page.${pageId()}.title`);
+    }
 }
 function loadFooter() {
     const footer = document.querySelector("[role=footer-content]");
