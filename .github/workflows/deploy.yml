@@ -38,5 +38,5 @@ jobs:
           port: 21
           local-dir: ./                                # matches your working main.yml
           server-dir: /public_html/ed/
-          dry-run: true
+          dry-run: false
           log-level: verbose
