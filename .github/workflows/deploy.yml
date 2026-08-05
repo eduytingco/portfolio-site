@@ -1,41 +1,51 @@
-=name: Deploy to Hostinger
+- name: Connectivity debug (FTP/FTPS/SFTP)
+  env:
+    HOST: ${{ secrets.HOSTINGER_HOST }}
+    USER: ${{ secrets.HOSTINGER_USER }}
+    PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+    PORT_FTP: 21
+    PORT_FTPS_IMPLICIT: 990
+    PORT_SFTP: 22
+  run: |
+    set -euo pipefail
+    set -x
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+    # Fail early if secrets missing (prevents interactive prompts)
+    if [ -z "${HOST:-}" ] || [ -z "${USER:-}" ] || [ -z "${PASS:-}" ]; then
+      echo "ERROR: One of HOST, USER, or PASS is empty. Make sure the repository secrets are set." >&2
+      echo "HOST='${HOST:-}', USER='${USER:-}'" >&2
+      exit 1
+    fi
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq netcat-openbsd lftp openssh-client ca-certificates
 
-      - name: (Optional) Build site
-        run: |
-          if [ -f package.json ]; then
-            npm ci
-            if npm run | grep -q "build"; then
-              npm run build
-            fi
-          fi
+    echo "=== TCP port checks (5s timeout each) ==="
+    nc -vz -w 5 "$HOST" "$PORT_FTP" || echo "port $PORT_FTP closed/filtered"
+    nc -vz -w 5 "$HOST" "$PORT_FTPS_IMPLICIT" || echo "port $PORT_FTPS_IMPLICIT closed/filtered"
+    nc -vz -w 5 "$HOST" "$PORT_SFTP" || echo "port $PORT_SFTP closed/filtered"
 
-      - name: Show workspace for debug
-        run: |
-          echo "Repo root:"
-          ls -la
-          echo "Contents of repo root (first 200 entries):"
-          ls -la | sed -n '1,200p'
+    echo
+    echo "=== OpenSSL FTPS explicit (STARTTLS) test on port 21 (5s) ==="
+    timeout 5s openssl s_client -connect "$HOST:21" -starttls ftp < /dev/null || echo "openssl STARTTLS test failed/timed out"
 
-      - name: Deploy to Hostinger via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./
-          server-dir: /public_html/ed/
-          log-level: standard
+    echo
+    echo "=== lftp protocol tests (non-interactive) ==="
+    echo "Plain FTP (ftp://):"
+    lftp -u "$USER","$PASS" -p "$PORT_FTP" -e "set net:max-retries 1; set net:timeout 5; ls -la /public_html/ed || true; bye" ftp://"$HOST" || echo "plain FTP test failed"
+
+    echo
+    echo "FTPS explicit (ftps:// on port 21):"
+    lftp -u "$USER","$PASS" -p "$PORT_FTP" -e "set ssl:verify-certificate no; set net:timeout 5; ls -la /public_html/ed || true; bye" ftps://"$HOST" || echo "ftps explicit test failed"
+
+    echo
+    echo "FTPS implicit (ftps:// on port 990):"
+    lftp -u "$USER","$PASS" -p "$PORT_FTPS_IMPLICIT" -e "set ftp:ssl-force true; set ssl:verify-certificate no; set net:timeout 5; ls -la /public_html/ed || true; bye" ftps://"$HOST" || echo "ftps implicit test failed"
+
+    echo
+    echo "SFTP via lftp (sftp://):"
+    lftp -u "$USER","$PASS" -e "set net:timeout 5; ls -la /public_html/ed || true; bye" sftp://"$HOST" || echo "sftp (lftp) test failed"
+
+    echo
+    echo "=== Quick SSH banner/auth check (no password prompt) ==="
+    ssh -oBatchMode=yes -oConnectTimeout=5 -vvv -p "$PORT_SFTP" "$USER@$HOST" exit || echo "SSH banner/auth check failed (expected if no key configured)."
