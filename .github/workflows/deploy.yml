@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -28,7 +29,7 @@ jobs:
           echo "Contents of repo root (first 200 entries):"
           ls -la | sed -n '1,200p'
 
-      - name: Upload via lftp (FTPS, insecure TLS - hostname mismatch tolerated)
+      - name: Upload via lftp (FTPS — parallel)
         env:
           HOST: ${{ secrets.HOSTINGER_HOST }}
           USER: ${{ secrets.HOSTINGER_USER }}
@@ -41,7 +42,13 @@ jobs:
           echo "Installing lftp..."
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
-          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR (FTPS, certificate verification disabled)"
-          # NOTE: set ssl:verify-certificate no disables TLS hostname/cert verification.
-          # Prefer to fix HOST to use the hostname matching the certificate and remove that setting.
-          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 60; mirror -R --verbose --delete --only-newer \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
+
+          # NOTE: ssl:verify-certificate is disabled here because the server's TLS cert CN previously didn't match the host/IP used.
+          # After you update HOSTINGER_HOST to the Hostinger-provided hostname (e.g., ftpXXX.hstgr.io), remove the 'set ssl:verify-certificate no' setting.
+          LFTP_OPTS='set ssl:verify-certificate no; set net:timeout 60; set net:max-retries 1; set net:reconnect-interval-base 1'
+
+          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR using parallel transfers"
+          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e \
+            "$LFTP_OPTS; mirror -R --verbose --parallel=5 --delete --only-newer \
+            --exclude-glob .git --exclude-glob node_modules --exclude-glob '*.map' \
+            \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
