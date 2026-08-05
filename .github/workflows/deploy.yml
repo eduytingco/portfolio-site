@@ -6,5 +6,9 @@
       port: ${{ secrets.HOSTINGER_PORT }}
       key: ${{ secrets.HOSTINGER_SSH_KEY }}
       script: |
+        set -e
         cd public_html/ed
-        git pull origin main
+        git fetch origin
+        # checkout the branch/commit that triggered the workflow
+        git checkout -B "${{ github.ref_name }}" "origin/${{ github.ref_name }}" || true
+        git reset --hard "${{ github.sha }}"
