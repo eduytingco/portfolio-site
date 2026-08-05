@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+=name: Deploy to Hostinger
 
 on:
   push:
@@ -31,11 +31,11 @@ jobs:
       - name: Deploy to Hostinger via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.HOSTINGER_HOST }}        # or secrets.FTP_SERVER if you prefer
-          username: ${{ secrets.HOSTINGER_USER }}      # or secrets.FTP_USERNAME
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }} # or secrets.FTP_PASSWORD
-          protocol: FTPS
+          server: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftps
           port: 21
-          local-dir: ./                                # matches your working main.yml
+          local-dir: ./
           server-dir: /public_html/ed/
           log-level: standard
