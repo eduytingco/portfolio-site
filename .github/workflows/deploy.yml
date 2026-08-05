@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, deploy]
     timeout-minutes: 60
     steps:
       - name: FTPS verbose debug (passive/active + curl)
