@@ -21,58 +21,6 @@ jobs:
             fi
           fi
 
-      - name: Connectivity debug (FTP/FTPS/SFTP)
-        env:
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          USER: ${{ secrets.HOSTINGER_USER }}
-          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          PORT_FTP: 21
-          PORT_FTPS_IMPLICIT: 990
-          PORT_SFTP: 22
-        run: |
-          set -euo pipefail
-          set -x
-
-          # Fail early if secrets missing (prevents interactive prompts)
-          if [ -z "${HOST:-}" ] || [ -z "${USER:-}" ] || [ -z "${PASS:-}" ]; then
-            echo "ERROR: One of HOST, USER, or PASS is empty. Make sure the repository secrets are set." >&2
-            echo "HOST='${HOST:-}', USER='${USER:-}'" >&2
-            exit 1
-          fi
-
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq netcat-openbsd lftp openssh-client ca-certificates
-
-          echo "=== TCP port checks (5s timeout each) ==="
-          nc -vz -w 5 "$HOST" "$PORT_FTP" || echo "port $PORT_FTP closed/filtered"
-          nc -vz -w 5 "$HOST" "$PORT_FTPS_IMPLICIT" || echo "port $PORT_FTPS_IMPLICIT closed/filtered"
-          nc -vz -w 5 "$HOST" "$PORT_SFTP" || echo "port $PORT_SFTP closed/filtered"
-
-          echo
-          echo "=== OpenSSL FTPS explicit (STARTTLS) test on port 21 (5s) ==="
-          timeout 5s openssl s_client -connect "$HOST:21" -starttls ftp < /dev/null || echo "openssl STARTTLS test failed/timed out"
-
-          echo
-          echo "=== lftp protocol tests (non-interactive) ==="
-          echo "Plain FTP (ftp://):"
-          lftp -u "$USER","$PASS" -p "$PORT_FTP" -e "set net:max-retries 1; set net:timeout 5; ls -la /public_html/ed || true; bye" ftp://"$HOST" || echo "plain FTP test failed"
-
-          echo
-          echo "FTPS explicit (ftps:// on port 21):"
-          lftp -u "$USER","$PASS" -p "$PORT_FTP" -e "set ssl:verify-certificate no; set net:timeout 5; ls -la /public_html/ed || true; bye" ftps://"$HOST" || echo "ftps explicit test failed"
-
-          echo
-          echo "FTPS implicit (ftps:// on port 990):"
-          lftp -u "$USER","$PASS" -p "$PORT_FTPS_IMPLICIT" -e "set ftp:ssl-force true; set ssl:verify-certificate no; set net:timeout 5; ls -la /public_html/ed || true; bye" ftps://"$HOST" || echo "ftps implicit test failed"
-
-          echo
-          echo "SFTP via lftp (sftp://):"
-          lftp -u "$USER","$PASS" -e "set net:timeout 5; ls -la /public_html/ed || true; bye" sftp://"$HOST" || echo "sftp (lftp) test failed"
-
-          echo
-          echo "=== Quick SSH banner/auth check (no password prompt) ==="
-          ssh -oBatchMode=yes -oConnectTimeout=5 -vvv -p "$PORT_SFTP" "$USER@$HOST" exit || echo "SSH banner/auth check failed (expected if no key configured)."
-
       - name: Show workspace for debug
         run: |
           echo "Repo root:"
@@ -80,14 +28,19 @@ jobs:
           echo "Contents of repo root (first 200 entries):"
           ls -la | sed -n '1,200p'
 
-      - name: Deploy to Hostinger via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./
-          server-dir: /public_html/ed/
-          log-level: standard
+      - name: Upload via lftp (FTPS, insecure TLS - hostname mismatch tolerated)
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          REMOTE_DIR: /public_html/ed/
+          LOCAL_DIR: ./
+        run: |
+          set -euo pipefail
+          echo "Installing lftp..."
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$21$REMOTE_DIR (FTPS, certificate verification disabled)"
+          # NOTE: set ssl:verify-certificate no disables TLS hostname/cert verification.
+          # Prefer to fix HOST to use the hostname matching the certificate and remove that setting.
+          lftp -u "$USER","$PASS" -p 21 ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 60; mirror -R --verbose --delete --only-newer \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
