@@ -34,7 +34,7 @@ jobs:
           server: ${{ secrets.HOSTINGER_HOST }}        # or secrets.FTP_SERVER if you prefer
           username: ${{ secrets.HOSTINGER_USER }}      # or secrets.FTP_USERNAME
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }} # or secrets.FTP_PASSWORD
-          protocol: ftps
+          protocol: FTPS
           port: 21
           local-dir: ./                                # matches your working main.yml
           server-dir: /public_html/ed/
