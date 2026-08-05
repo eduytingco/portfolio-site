@@ -1,54 +1,52 @@
-name: Deploy to Hostinger
+  name: Deploy
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  on:
+    push:
+      branches: [ main ]
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-      - name: (Optional) Build site
-        run: |
-          if [ -f package.json ]; then
-            npm ci
-            if npm run | grep -q "build"; then
-              npm run build
+        - name: (Optional) Build site
+          run: |
+            if [ -f package.json ]; then
+              npm ci
+              if npm run | grep -q "build"; then
+                npm run build
+              fi
             fi
-          fi
 
-      - name: Show workspace for debug
-        run: |
-          echo "Repo root:"
-          ls -la
-          echo "Contents of repo root (first 200 entries):"
-          ls -la | sed -n '1,200p'
+        - name: Show workspace for debug
+          run: |
+            echo "Repo root:"
+            ls -la
+            echo "Contents of repo root (first 200 entries):"
+            ls -la | sed -n '1,200p'
 
-      - name: Upload via lftp (FTPS — parallel)
-        env:
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          USER: ${{ secrets.HOSTINGER_USER }}
-          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          REMOTE_DIR: /public_html/ed/
-          LOCAL_DIR: ./
-          PORT: 21
-        run: |
-          set -euo pipefail
-          echo "Installing lftp..."
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq lftp
+        - name: Upload via lftp (FTPS — parallel)
+          env:
+            HOST: ${{ secrets.HOSTINGER_HOST }}
+            USER: ${{ secrets.HOSTINGER_USER }}
+            PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+            REMOTE_DIR: /public_html/ed/
+            LOCAL_DIR: ./
+            PORT: 21
+          run: |
+            set -euo pipefail
+            echo "Installing lftp..."
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq lftp
 
-          # NOTE: ssl:verify-certificate is disabled here because the server's TLS cert CN previously didn't match the host/IP used.
-          # After you update HOSTINGER_HOST to the Hostinger-provided hostname (e.g., ftpXXX.hstgr.io), remove the 'set ssl:verify-certificate no' setting.
-          LFTP_OPTS='set ssl:verify-certificate no; set net:timeout 60; set net:max-retries 1; set net:reconnect-interval-base 1'
+            # NOTE: ssl:verify-certificate is disabled here because the server's TLS cert CN previously didn't match the host/IP used.
+            # After you update HOSTINGER_HOST to the Hostinger-provided hostname (e.g., ftpXXX.hstgr.io), remove the 'set ssl:verify-certificate no' setting.
+            LFTP_OPTS='set ssl:verify-certificate no; set net:timeout 60; set net:max-retries 1; set net:reconnect-interval-base 1'
 
-          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR using parallel transfers"
-          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e \
-            "$LFTP_OPTS; mirror -R --verbose --parallel=5 --delete --only-newer \
-            --exclude-glob .git --exclude-glob node_modules --exclude-glob '*.map' \
-            \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
+            echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR using parallel transfers"
+            lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e \
+              "$LFTP_OPTS; mirror -R --verbose --parallel=5 --delete --only-newer \
+              --exclude-glob .git --exclude-glob node_modules --exclude-glob '*.map' \
+              \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
