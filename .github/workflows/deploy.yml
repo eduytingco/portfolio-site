@@ -6,68 +6,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node (optional; used if repo has Node toolchain)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
-      - name: Install dependencies (if present)
+      - name: (Optional) Build site
         run: |
           if [ -f package.json ]; then
             npm ci
-          else
-            echo "No package.json — skipping npm install"
-          fi
-
-      - name: Build site (if build script exists)
-        run: |
-          if npm run | grep -q "build"; then
-            npm run build
-          else
-            echo "No build script — skipping build"
-          fi
-
-      - name: Find deploy folder
-        id: find_dir
-        run: |
-          # Candidate folders (prefer public_html/ed if present)
-          candidates=("public_html/ed" "public_html/ed/" "public_html" "dist" "build" "public" "out" ".")
-          deploy=""
-          for d in "${candidates[@]}"; do
-            if [ -d "$d" ]; then
-              if [ "$d" = "public_html/ed" ] || [ "$d" = "public_html/ed/" ]; then
-                deploy="$d/"
-                break
-              fi
-              if [ -z "$deploy" ]; then
-                deploy="$d/"
-              fi
+            if npm run | grep -q "build"; then
+              npm run build
             fi
-          done
-          if [ -z "$deploy" ]; then
-            echo "No deploy directory found among candidates: ${candidates[*]}" >&2
-            exit 1
           fi
-          echo "deploy_dir=$deploy" >> $GITHUB_OUTPUT
-          echo "Using deploy directory: $deploy"
 
-      - name: Show deploy files
+      - name: Show workspace for debug
         run: |
-          echo "Contents of deployment folder:"
-          ls -la "${{ steps.find_dir.outputs.deploy_dir }}"
+          echo "Repo root:"
+          ls -la
+          echo "Contents of repo root (first 200 entries):"
+          ls -la | sed -n '1,200p'
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      - name: Deploy to Hostinger via FTP (dry run)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          protocol: ftps            # change to "sftp" and set port to 22 if Hostinger supports SFTP
-          local-dir: ${{ steps.find_dir.outputs.deploy_dir }}
+          server: ${{ secrets.HOSTINGER_HOST }}        # or secrets.FTP_SERVER if you prefer
+          username: ${{ secrets.HOSTINGER_USER }}      # or secrets.FTP_USERNAME
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }} # or secrets.FTP_PASSWORD
+          protocol: ftp
+          port: 21
+          local-dir: ./                                # matches your working main.yml
           server-dir: /public_html/ed/
+          dry-run: true
+          log-level: DEBUG
