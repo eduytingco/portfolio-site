@@ -68,6 +68,6 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT }}
-          protocol: ftp            # change to "sftp" and set port to 22 if Hostinger supports SFTP
+          protocol: sftp            # change to "sftp" and set port to 22 if Hostinger supports SFTP
           local-dir: ${{ steps.find_dir.outputs.deploy_dir }}
           server-dir: /public_html/ed/
