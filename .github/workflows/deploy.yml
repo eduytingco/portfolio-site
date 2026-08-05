@@ -35,12 +35,13 @@ jobs:
           PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           REMOTE_DIR: /public_html/ed/
           LOCAL_DIR: ./
+          PORT: 21
         run: |
           set -euo pipefail
           echo "Installing lftp..."
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
-          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$21$REMOTE_DIR (FTPS, certificate verification disabled)"
+          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR (FTPS, certificate verification disabled)"
           # NOTE: set ssl:verify-certificate no disables TLS hostname/cert verification.
           # Prefer to fix HOST to use the hostname matching the certificate and remove that setting.
-          lftp -u "$USER","$PASS" -p 21 ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 60; mirror -R --verbose --delete --only-newer \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
+          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 60; mirror -R --verbose --delete --only-newer \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
