@@ -81,12 +81,16 @@ export function getMessage(key: string): string {
 
 export function appendCacheBusterToExistingScripts() {
   const scripts = document.querySelectorAll('script');
-  const cacheBuster = new Date().getTime().toString();
+  const cacheBuster = {v: new Date().getTime().toString()};
+
+  if (scripts.length === 0) {
+    return;
+  }
 
   scripts.forEach(script => {
     if (script.src) {
       const separator = script.src.includes('?') ? '&' : '?';
-      script.src = `${script.src}${separator}v=${cacheBuster}`;
+      script.src = `${script.src}${separator}v=${cacheBuster.v}`;
     }
   });
 }
