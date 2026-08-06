@@ -51,12 +51,9 @@ export function getMessage(key) {
     }
     return message;
 }
-export function cacheBuster() {
-    return new Date().getTime().toString();
-}
 export function appendCacheBusterToExistingScripts() {
     const scripts = document.querySelectorAll('script');
-    const cacheBuster = Date.now();
+    const cacheBuster = new Date().getTime().toString();
     scripts.forEach(script => {
         if (script.src) {
             const separator = script.src.includes('?') ? '&' : '?';

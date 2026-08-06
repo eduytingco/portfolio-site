@@ -79,13 +79,9 @@ export function getMessage(key: string): string {
     return message;
 }
 
-export function cacheBuster(): string {
-    return new Date().getTime().toString();
-}
-
 export function appendCacheBusterToExistingScripts() {
   const scripts = document.querySelectorAll('script');
-  const cacheBuster = Date.now();
+  const cacheBuster = new Date().getTime().toString();
 
   scripts.forEach(script => {
     if (script.src) {
