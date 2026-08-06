@@ -1,4 +1,4 @@
-import { loadMessages, getMessage } from "./i18n.js";
+import { loadMessages, getMessage, appendCacheBusterToExistingScripts } from "./i18n.js";
 
 function loadNavbar(): void {
     const nav = document.getElementById("subpage-nav");
@@ -188,6 +188,7 @@ async function init(): Promise<void> {
         loadParallax();
         loadContent();
         loadFooter();
+        appendCacheBusterToExistingScripts();
     } catch (error: unknown) {
         console.error("Unable to initialize the website:", error);
     }

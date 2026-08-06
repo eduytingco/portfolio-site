@@ -78,3 +78,19 @@ export function getMessage(key: string): string {
 
     return message;
 }
+
+export function cacheBuster(): string {
+    return new Date().getTime().toString();
+}
+
+export function appendCacheBusterToExistingScripts() {
+  const scripts = document.querySelectorAll('script');
+  const cacheBuster = Date.now();
+
+  scripts.forEach(script => {
+    if (script.src) {
+      const separator = script.src.includes('?') ? '&' : '?';
+      script.src = `${script.src}${separator}v=${cacheBuster}`;
+    }
+  });
+}

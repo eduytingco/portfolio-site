@@ -1,4 +1,4 @@
-import { loadMessages, getMessage } from "./i18n.js";
+import { loadMessages, getMessage, appendCacheBusterToExistingScripts } from "./i18n.js";
 function loadNavbar() {
     const nav = document.getElementById("subpage-nav");
     const toggle = document.querySelector("#nav-menu-toggle");
@@ -157,6 +157,7 @@ async function init() {
         loadParallax();
         loadContent();
         loadFooter();
+        appendCacheBusterToExistingScripts();
     }
     catch (error) {
         console.error("Unable to initialize the website:", error);

@@ -51,4 +51,17 @@ export function getMessage(key) {
     }
     return message;
 }
+export function cacheBuster() {
+    return new Date().getTime().toString();
+}
+export function appendCacheBusterToExistingScripts() {
+    const scripts = document.querySelectorAll('script');
+    const cacheBuster = Date.now();
+    scripts.forEach(script => {
+        if (script.src) {
+            const separator = script.src.includes('?') ? '&' : '?';
+            script.src = `${script.src}${separator}v=${cacheBuster}`;
+        }
+    });
+}
 //# sourceMappingURL=i18n.js.map
