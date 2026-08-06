@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+name: Deploy
 
 on:
   push:
@@ -8,19 +8,77 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v3
+      - name: FTPS verbose debug (passive/active + curl)
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          PORT: 21
+          REMOTE_DIR: /public_html/ed/
+        run: |
+          set -euo pipefail
+          set -x
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          script: |
-            cd public_html/ed
-            git fetch origin
-            # checkout the branch/commit that triggered the workflow
-            git checkout -B "${{ github.ref_name }}" "origin/${{ github.ref_name }}" || true
-            git reset --hard "${{ github.sha }}"
+          # install with visible output and timeouts to avoid hanging
+          timeout 120s sudo apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=10 || { echo "apt-get update timed out"; exit 1; }
+          timeout 180s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y lftp curl netcat-openbsd -o Dpkg::Options::="--force-confold" || { echo "apt-get install failed or timed out"; exit 1; }
+
+          echo "=== TCP connect (sanity) ==="
+          nc -vz -w 5 "$HOST" "$PORT" || echo "port $PORT connect failed"
+
+          echo
+          echo "=== lftp verbose: passive mode (ls) ==="
+          timeout 20 lftp -d -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 10; set net:max-retries 1; set ftp:passive-mode yes; set ftp:prefer-epsv yes; ls -la $REMOTE_DIR; bye" || true
+
+          echo
+          echo "=== lftp verbose: active mode (ls) ==="
+          timeout 20 lftp -d -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 10; set net:max-retries 1; set ftp:passive-mode no; set ftp:prefer-epsv no; ls -la $REMOTE_DIR; bye" || true
+
+          echo
+          echo "=== curl FTPS list (verbose) ==="
+          timeout 20 curl -v --ftp-ssl -k "ftp://$USER:$PASS@$HOST:$PORT$REMOTE_DIR" || true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: (Optional) Build site
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            if npm run | grep -q "build"; then
+              npm run build
+            fi
+          fi
+
+      - name: Show workspace for debug
+        run: |
+          echo "Repo root:"
+          ls -la
+          echo "Contents of repo root (first 200 entries):"
+          ls -la | sed -n '1,200p'
+
+      - name: Upload via lftp (FTPS — parallel)
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          REMOTE_DIR: /public_html/ed/
+          LOCAL_DIR: ./
+          PORT: 21
+        run: |
+          set -euo pipefail
+          echo "Installing lftp..."
+          # install with visible output and timeouts to avoid hanging
+          timeout 120s sudo apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=10 || { echo "apt-get update timed out"; exit 1; }
+          timeout 180s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y lftp -o Dpkg::Options::="--force-confold" || { echo "apt-get install failed or timed out"; exit 1; }
+
+          # NOTE: ssl:verify-certificate is disabled here for debugging; remove it once HOST is corrected
+          LFTP_OPTS='set ssl:verify-certificate no; set net:timeout 60; set net:max-retries 1; set net:reconnect-interval-base 1'
+
+          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR using parallel transfers"
+          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e \
+            "$LFTP_OPTS; mirror -R --verbose --parallel=5 --delete --only-newer \
+            --exclude-glob .git --exclude-glob node_modules --exclude-glob '*.map' \
+            \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
