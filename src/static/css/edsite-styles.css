@@ -471,12 +471,15 @@ footer {
   .site-header {
     padding: 1rem 0;
   }
+  .site-nav.subpage {
+    padding: 16px 0;
+  }
   .nav-menu-toggle {
     display: block;
   }
   .nav-menu {
     position: absolute;
-    top: calc(100% + 0.65rem);
+    top: 12vh;
     right: 4%;
     left: 4%;
     display: none;
@@ -542,7 +545,8 @@ footer {
          column-gap: 0;
   }
   #subpage-hero-title {
-    margin: 0 0 -80px;
+    margin: 0 0 -94px;
+    font-size: 44px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
