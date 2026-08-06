@@ -453,6 +453,8 @@ footer {
 
 .text-block {
     white-space: pre-line;
+    column-count: 2;
+    column-gap: 2rem;
 }
 
 @keyframes scroll-bounce {
@@ -570,6 +572,15 @@ footer {
 
     .quick-card p {
         min-height: 0
+    }
+
+    .text-block {
+        column-count: 1;
+        column-gap: 0;
+    }
+
+    #subpage-hero-title {
+        margin: 0 0 -80px;
     }
 }
 
