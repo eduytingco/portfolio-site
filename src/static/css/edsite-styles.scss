@@ -522,7 +522,8 @@ footer {
         padding: .75rem;
         background: rgb(8 8 8 / 96%);
         border: 1px solid rgb(255 255 255 / 10%);
-        box-shadow: 0 14px 32px rgb(0 0 0 / 35%)
+        box-shadow: 0 14px 32px rgb(0 0 0 / 35%);
+        z-index: 2;
     }
 
     .nav-menu.is-open {
