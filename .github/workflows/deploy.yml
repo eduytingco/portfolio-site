@@ -15,7 +15,7 @@ jobs:
           HOST: ${{ secrets.HOSTINGER_HOST }}
           USER: ${{ secrets.HOSTINGER_USER }}
           PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          PORT: 21
+          PORT: 65002
           REMOTE_DIR: /public_html/ed/
         run: |
           set -euo pipefail
