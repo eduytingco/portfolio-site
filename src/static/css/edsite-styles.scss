@@ -6,6 +6,7 @@
     --surface-text: #222;
     --scroll: 0;
     --default-bg: #000;
+    --borders: #e7e7e7;
 }
 
 *,
@@ -450,10 +451,14 @@ footer {
     font-size: .85rem
 }
 
-.text-block {
-    white-space: pre-line;
-    column-count: 2;
-    column-gap: 2rem;
+[page-id] {
+    .text-block {
+        white-space: pre-line;
+        column-count: 2;
+        column-gap: 2rem;
+        column-rule: 1px double rgb(0 0 0 / 8%);
+        column-fill: balance;
+    }
 }
 
 @keyframes scroll-bounce {
@@ -584,14 +589,18 @@ footer {
         min-height: 0
     }
 
-    .text-block {
-        column-count: 1;
-        column-gap: 0;
+    [page-id] {
+        .text-block {
+            column-count: 1;
+            column-gap: 0;
+            column-rule: 0;
+        }
+
+        #subpage-hero-title {
+            font-size: 44px;
+        }
     }
 
-    [page-id] #subpage-hero-title {
-        font-size: 44px;
-    }
 }
 
 @media(prefers-reduced-motion:reduce) {

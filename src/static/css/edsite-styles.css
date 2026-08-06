@@ -7,6 +7,7 @@
   --surface-text: #222;
   --scroll: 0;
   --default-bg: #000;
+  --borders: #e7e7e7;
 }
 
 *,
@@ -434,12 +435,16 @@ footer {
   font-size: 0.85rem;
 }
 
-.text-block {
+[page-id] .text-block {
   white-space: pre-line;
   -moz-column-count: 2;
        column-count: 2;
   -moz-column-gap: 2rem;
        column-gap: 2rem;
+  -moz-column-rule: 1px double rgba(0, 0, 0, 0.08);
+       column-rule: 1px double rgba(0, 0, 0, 0.08);
+  -moz-column-fill: balance;
+       column-fill: balance;
 }
 
 @keyframes scroll-bounce {
@@ -543,11 +548,13 @@ footer {
   .quick-card p {
     min-height: 0;
   }
-  .text-block {
+  [page-id] .text-block {
     -moz-column-count: 1;
          column-count: 1;
     -moz-column-gap: 0;
          column-gap: 0;
+    -moz-column-rule: 0;
+         column-rule: 0;
   }
   [page-id] #subpage-hero-title {
     font-size: 44px;
