@@ -36,11 +36,15 @@ function loadNavbar(): void {
     });
 
     document.addEventListener("click", (event: MouseEvent) => {
-        const target = event.target instanceof Node ? event.target : null;
-        if (target !== null && !navElement.contains(target)) {
-            closeMenu();
-        }
-    });
+    const target = event.target instanceof Node ? event.target : null;
+    if (
+        target !== null &&
+        !navElement.contains(target) &&
+        !toggleButton.contains(target)
+    ) {
+        closeMenu();
+    }
+});
 
     document.addEventListener("keydown", (event: KeyboardEvent) => {
         if (event.key === "Escape") {

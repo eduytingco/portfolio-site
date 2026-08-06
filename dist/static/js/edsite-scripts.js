@@ -27,7 +27,9 @@ function loadNavbar() {
     });
     document.addEventListener("click", (event) => {
         const target = event.target instanceof Node ? event.target : null;
-        if (target !== null && !navElement.contains(target)) {
+        if (target !== null &&
+            !navElement.contains(target) &&
+            !toggleButton.contains(target)) {
             closeMenu();
         }
     });
