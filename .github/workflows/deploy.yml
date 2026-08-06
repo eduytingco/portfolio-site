@@ -16,7 +16,7 @@ jobs:
           USER: ${{ secrets.HOSTINGER_USER }}
           PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           PORT: 65002
-          REMOTE_DIR: /public_html/ed/
+          REMOTE_DIR: /home/u585272320/domains/uytingco.com/public_html/ed
         run: |
           set -euo pipefail
           set -x
