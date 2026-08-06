@@ -80,17 +80,22 @@ export function getMessage(key: string): string {
 }
 
 export function appendCacheBusterToExistingScripts() {
-  const scripts = document.querySelectorAll('script');
-  const cacheBuster = {v: new Date().getTime().toString()};
+    const scripts = document.querySelectorAll('script');
+    const cacheBuster = { v: new Date().getTime().toString() };
+    const intRandomizer = Math.floor(1000 + Math.random() * 9000);
+    const url = new URL(window.location.href);
 
-  if (scripts.length === 0) {
-    return;
-  }
+    url.searchParams.set('v', `${cacheBuster.v}`);
+    url.searchParams.set('r', `${intRandomizer}`);
 
-  scripts.forEach(script => {
-    if (script.src) {
-      const separator = script.src.includes('?') ? '&' : '?';
-      script.src = `${script.src}${separator}v=${cacheBuster.v}`;
+    if (scripts.length === 0) {
+        return;
     }
-  });
+
+    scripts.forEach(script => {
+        if (script.src) {
+            const separator = script.src.includes('?') ? '&' : '?';
+            script.src = `${script.src}${separator}v=${cacheBuster.v}&r=${intRandomizer}`;
+        }
+    });
 }
