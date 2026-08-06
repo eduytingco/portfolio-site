@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "properties-reader": "^3.0.1",
     "typescript": "^7.0.2"
   }
 }
