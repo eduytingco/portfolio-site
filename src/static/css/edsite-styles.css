@@ -391,19 +391,27 @@ main {
 }
 
 [page-id=about] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-about.PNG);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-about.PNG");
+  background-size: cover;
+  background-position: center;
 }
 
 [page-id=projects] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-projects.PNG);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-projects.PNG");
+  background-size: cover;
+  background-position: center;
 }
 
 [page-id=contact] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-contact.PNG);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-contact.PNG");
+  background-size: cover;
+  background-position: center;
 }
 
 [page-id=experience] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-experience.PNG);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-experience.PNG");
+  background-size: cover;
+  background-position: center;
 }
 
 section:not(.quick-links) {
@@ -560,6 +568,62 @@ footer {
     font-size: 44px;
   }
 }
+#subpage-sample-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.case-study-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #ffffff;
+  border: 1px solid #e2e0d8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.case-study-card:hover {
+  border-color: #b4b2a9;
+  transform: translateY(-2px);
+}
+.case-study-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background: #f4f3ef;
+}
+.case-study-card-body {
+  padding: 16px 18px;
+}
+.case-study-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a18;
+  margin: 0 0 8px;
+}
+.case-study-card-summary {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b6a62;
+  margin: 0 0 12px;
+}
+.case-study-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.case-study-card-tag {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #E6F1FB;
+  color: #0C447C;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

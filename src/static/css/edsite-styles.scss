@@ -402,20 +402,30 @@ main {
     }
 }
 
+@mixin overlay-bg($url, $opacity1: 0.6, $opacity2: 0.8, $color: #000) {
+  background-image: linear-gradient(
+    rgba($color, $opacity1), 
+    rgba($color, $opacity2)
+  ), url($url);
+  background-size: cover;
+  background-position: center;
+}
+
+
 [page-id="about"] #subpage-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-about.PNG);
+    @include overlay-bg('/src/static/images/edsite-subpage-hero-about.PNG')
 }
 
 [page-id="projects"] #subpage-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-projects.PNG);
+    @include overlay-bg('/src/static/images/edsite-subpage-hero-projects.PNG');
 }
 
 [page-id="contact"] #subpage-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-contact.PNG);
+    @include overlay-bg('/src/static/images/edsite-subpage-hero-contact.PNG');
 }
 
 [page-id="experience"] #subpage-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/src/static/images/edsite-subpage-hero-experience.PNG);
+    @include overlay-bg('/src/static/images/edsite-subpage-hero-experience.PNG');
 }
 
 section {
@@ -601,6 +611,77 @@ footer {
         }
     }
 
+}
+
+$case-study-border: #e2e0d8;
+$case-study-border-hover: #b4b2a9;
+$case-study-bg: #ffffff;
+$case-study-image-bg: #f4f3ef;
+$case-study-title-color: #1a1a18;
+$case-study-summary-color: #6b6a62;
+$case-study-tag-bg: #E6F1FB;
+$case-study-tag-color: #0C447C;
+
+#subpage-sample-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.case-study-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: $case-study-bg;
+    border: 1px solid $case-study-border;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        border-color: $case-study-border-hover;
+        transform: translateY(-2px);
+    }
+
+    &-image {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background: $case-study-image-bg;
+    }
+
+    &-body {
+        padding: 16px 18px;
+    }
+
+    &-title {
+        font-size: 17px;
+        font-weight: 600;
+        color: $case-study-title-color;
+        margin: 0 0 8px;
+    }
+
+    &-summary {
+        font-size: 14px;
+        line-height: 1.5;
+        color: $case-study-summary-color;
+        margin: 0 0 12px;
+    }
+
+    &-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    &-tag {
+        font-size: 12px;
+        padding: 3px 10px;
+        border-radius: 6px;
+        background: $case-study-tag-bg;
+        color: $case-study-tag-color;
+    }
 }
 
 @media(prefers-reduced-motion:reduce) {

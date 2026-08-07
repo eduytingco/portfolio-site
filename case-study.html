@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="page-title"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/static/css/edsite-styles.css ">
+</head>
+<body page-id="">
+
+    <header>
+        <nav id="subpage-nav" class="site-nav subpage" aria-label="Primary navigation">
+            <a class="brand" href="index.html" aria-label="Ed Uytingco home" title="Ed Uytingco Online Portfolio Home">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <span class="brand-name">Ed Uytingco</span>
+            </a>
+            <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false"
+                aria-controls="nav-menu" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="pages.html?page=about" nav-link-id="about">{nav.about}</a></li>
+                <li><a href="pages.html?page=projects" nav-link-id="projects">{nav.projects}</a></li>
+                <li><a href="pages.html?page=experience" nav-link-id="experience">{nav.experience}</a></li>
+                <li><a href="pages.html?page=contact" nav-link-id="contact">{nav.contact}</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="case-study-detail">
+        <a href="/?page=projects" id="case-study-back">← Back to projects</a>
+
+        <header class="case-study-header">
+            <h1 id="case-study-title"></h1>
+            <p id="case-study-subtitle"></p>
+        </header>
+
+        <img id="case-study-image" class="case-study-image" alt="" loading="lazy">
+
+        <section class="case-study-section">
+            <h2 class="case-study-label">Problem</h2>
+            <p id="case-study-problem"></p>
+        </section>
+
+        <section class="case-study-section">
+            <h2 class="case-study-label">Constraints</h2>
+            <div id="case-study-constraints" class="case-study-constraints-grid"></div>
+        </section>
+
+        <section class="case-study-section">
+            <h2 class="case-study-label">Approach</h2>
+            <p id="case-study-approach"></p>
+        </section>
+
+        <section class="case-study-section">
+            <h2 class="case-study-label">Result</h2>
+            <p id="case-study-result" class="case-study-result-box"></p>
+        </section>
+
+        <section class="case-study-section">
+            <h2 class="case-study-label">Reflection</h2>
+            <p id="case-study-reflection"></p>
+        </section>
+    </main>
+
+    <footer>
+        <section id="footer-case-study"><span id="footer-case-study-content" role="footer-content"></span></section>
+    </footer>
+    <script src="dist/static/js/edsite-scripts.js" type="module"></script>
+</body>
+</html>
