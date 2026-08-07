@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           server: ${{ secrets.HOSTINGER_HOST }}
           port: 65002
-          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           local_path: './*'
           remote_path: '/public_html/ed/'
           sftp_only: true
