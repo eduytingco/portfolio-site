@@ -30,5 +30,5 @@ jobs:
           port: 65002
           password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
           local_path: './*'
-          remote_path: '/public_html'
+          remote_path: '/public_html/ed/'
           sftp_only: true
