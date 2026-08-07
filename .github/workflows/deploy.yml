@@ -1,84 +1,34 @@
-name: Deploy
+name: Deploy to Hostinger
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
     steps:
-      - name: FTPS verbose debug (passive/active + curl)
-        env:
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          USER: ${{ secrets.HOSTINGER_USER }}
-          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          PORT: 65002
-          REMOTE_DIR: /home/u585272320/domains/uytingco.com/public_html/ed
-        run: |
-          set -euo pipefail
-          set -x
-
-          # install with visible output and timeouts to avoid hanging
-          timeout 120s sudo apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=10 || { echo "apt-get update timed out"; exit 1; }
-          timeout 180s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y lftp curl netcat-openbsd -o Dpkg::Options::="--force-confold" || { echo "apt-get install failed or timed out"; exit 1; }
-
-          echo "=== TCP connect (sanity) ==="
-          nc -vz -w 5 "$HOST" "$PORT" || echo "port $PORT connect failed"
-
-          echo
-          echo "=== lftp verbose: passive mode (ls) ==="
-          timeout 20 lftp -d -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 10; set net:max-retries 1; set ftp:passive-mode yes; set ftp:prefer-epsv yes; ls -la $REMOTE_DIR; bye" || true
-
-          echo
-          echo "=== lftp verbose: active mode (ls) ==="
-          timeout 20 lftp -d -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e "set ssl:verify-certificate no; set net:timeout 10; set net:max-retries 1; set ftp:passive-mode no; set ftp:prefer-epsv no; ls -la $REMOTE_DIR; bye" || true
-
-          echo
-          echo "=== curl FTPS list (verbose) ==="
-          timeout 20 curl -v --ftp-ssl -k "ftp://$USER:$PASS@$HOST:$PORT$REMOTE_DIR" || true
-
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: (Optional) Build site
-        run: |
-          if [ -f package.json ]; then
-            npm ci
-            if npm run | grep -q "build"; then
-              npm run build
-            fi
-          fi
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Show workspace for debug
-        run: |
-          echo "Repo root:"
-          ls -la
-          echo "Contents of repo root (first 200 entries):"
-          ls -la | sed -n '1,200p'
+      - name: Install TypeScript
+        run: npm install -g typescript
 
-      - name: Upload via lftp (FTPS — parallel)
-        env:
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          USER: ${{ secrets.HOSTINGER_USER }}
-          PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          REMOTE_DIR: /public_html/ed/
-          LOCAL_DIR: ./
-          PORT: 21
-        run: |
-          set -euo pipefail
-          echo "Installing lftp..."
-          # install with visible output and timeouts to avoid hanging
-          timeout 120s sudo apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=10 || { echo "apt-get update timed out"; exit 1; }
-          timeout 180s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y lftp -o Dpkg::Options::="--force-confold" || { echo "apt-get install failed or timed out"; exit 1; }
+      - name: Compile TypeScript
+        run: tsc
 
-          # NOTE: ssl:verify-certificate is disabled here for debugging; remove it once HOST is corrected
-          LFTP_OPTS='set ssl:verify-certificate no; set net:timeout 60; set net:max-retries 1; set net:reconnect-interval-base 1'
-
-          echo "Uploading $LOCAL_DIR -> ftps://$HOST:$PORT$REMOTE_DIR using parallel transfers"
-          lftp -u "$USER","$PASS" -p "$PORT" ftps://"$HOST" -e \
-            "$LFTP_OPTS; mirror -R --verbose --parallel=5 --delete --only-newer \
-            --exclude-glob .git --exclude-glob node_modules --exclude-glob '*.map' \
-            \"$LOCAL_DIR\" \"$REMOTE_DIR\"; bye"
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: ${{ secrets.HOSTINGER_SFTP_USER }}
+          server: ${{ secrets.HOSTINGER_SFTP_HOST }}
+          port: 65002
+          password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          local_path: './*'
+          remote_path: '/public_html'
+          sftp_only: true
