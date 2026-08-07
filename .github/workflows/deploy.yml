@@ -25,10 +25,10 @@ jobs:
       - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          username: ${{ secrets.HOSTINGER_SFTP_USER }}
-          server: ${{ secrets.HOSTINGER_SFTP_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          server: ${{ secrets.HOSTINGER_HOST }}
           port: 65002
-          password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
           local_path: './*'
           remote_path: '/public_html/ed/'
           sftp_only: true
