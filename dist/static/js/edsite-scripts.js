@@ -1,11 +1,6 @@
 import { loadMessages, getMessage, appendCacheBusterToExistingScripts } from "./i18n.js";
-const CASE_STUDIES = [
-    { id: "homepage-carousel", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel2", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel3", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel4", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] }
-    // add more case studies here
-];
+import { loadCaseStudyData } from "./case-study-data.js";
+import { loadContactForm } from "./contact-form.js";
 function renderCaseStudyCard(caseStudy) {
     const card = document.createElement("a");
     card.className = "case-study-card";
@@ -13,16 +8,16 @@ function renderCaseStudyCard(caseStudy) {
     const img = document.createElement("img");
     img.className = "case-study-card-image";
     img.src = caseStudy.image;
-    img.alt = getMessage(`caseStudy.${caseStudy.id}.title`);
+    img.alt = caseStudy.title;
     img.loading = "lazy";
     const body = document.createElement("div");
     body.className = "case-study-card-body";
     const title = document.createElement("h3");
     title.className = "case-study-card-title";
-    title.textContent = getMessage(`caseStudy.${caseStudy.id}.title`);
+    title.textContent = caseStudy.title;
     const summary = document.createElement("p");
     summary.className = "case-study-card-summary";
-    summary.textContent = getMessage(`caseStudy.${caseStudy.id}.summary`);
+    summary.textContent = caseStudy.problem;
     const tagList = document.createElement("div");
     tagList.className = "case-study-card-tags";
     caseStudy.tags.forEach((tag) => {
@@ -35,15 +30,28 @@ function renderCaseStudyCard(caseStudy) {
     card.append(img, body);
     return card;
 }
-function loadCaseStudies() {
+function loadResumeButton() {
+    const resumeLink = document.getElementById("resume-download");
+    if (resumeLink === null) {
+        return;
+    }
+    resumeLink.textContent = getMessage("experience.resumeDownload");
+}
+async function loadCaseStudies() {
     if (pageId() !== "projects") {
         return;
     }
-    const grid = document.getElementById("subpage-sample-content");
+    const grid = document.getElementById("subpage-insta-content");
     if (grid === null) {
         return;
     }
-    grid.replaceChildren(...CASE_STUDIES.map(renderCaseStudyCard));
+    try {
+        const caseStudies = await loadCaseStudyData();
+        grid.replaceChildren(...caseStudies.map(renderCaseStudyCard));
+    }
+    catch (error) {
+        console.error("Unable to load case studies:", error);
+    }
 }
 function loadNavbar() {
     const nav = document.getElementById("subpage-nav");
@@ -200,11 +208,13 @@ function loadFooter() {
 async function init() {
     try {
         await loadMessages();
+        await loadCaseStudies();
         loadNavbar();
         loadNavigation();
         loadParallax();
         loadContent();
-        loadCaseStudies();
+        loadResumeButton();
+        loadContactForm();
         loadFooter();
         appendCacheBusterToExistingScripts();
     }

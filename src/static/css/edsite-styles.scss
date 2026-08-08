@@ -402,6 +402,33 @@ main {
     }
 }
 
+$error-color: #b3261e;
+$error-bg: #fdecea;
+
+.form-field {
+    &.has-error {
+        label {
+            color: $error-color;
+        }
+    }
+
+    input,
+    textarea {
+        &.is-invalid {
+            border-color: $error-color;
+            background: $error-bg;
+        }
+    }
+}
+
+.field-error-message {
+    display: block;
+    font-size: 13px;
+    color: $error-color;
+    margin-top: 4px;
+    min-height: 16px;
+}
+
 @mixin overlay-bg($url, $opacity1: 0.6, $opacity2: 0.8, $color: #000) {
   background-image: linear-gradient(
     rgba($color, $opacity1), 

@@ -1,4 +1,9 @@
 {
+  "name": "stunning-adventure",
+  "private": true,
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
   "dependencies": {
     "properties-reader": "^3.0.1",
     "typescript": "^7.0.2"

@@ -390,6 +390,23 @@ main {
   height: auto;
 }
 
+.form-field.has-error label {
+  color: #b3261e;
+}
+.form-field input.is-invalid,
+.form-field textarea.is-invalid {
+  border-color: #b3261e;
+  background: #fdecea;
+}
+
+.field-error-message {
+  display: block;
+  font-size: 13px;
+  color: #b3261e;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
 [page-id=about] #subpage-hero {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-about.PNG");
   background-size: cover;

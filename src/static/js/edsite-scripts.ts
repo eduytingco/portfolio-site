@@ -1,18 +1,6 @@
 import { loadMessages, getMessage, appendCacheBusterToExistingScripts } from "./i18n.js";
-
-interface CaseStudy {
-    id: string;
-    image: string;
-    tags: string[];
-}
-
-const CASE_STUDIES: CaseStudy[] = [
-    { id: "homepage-carousel", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel2", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel3", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] },
-    { id: "homepage-carousel4", image: "/src/static/images/homepage-carousel-case-study.png", tags: ["design", "frontEnd"] }
-    // add more case studies here
-];
+import { loadCaseStudyData, type CaseStudy } from "./case-study-data.js";
+import { loadContactForm } from "./contact-form.js";
 
 function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     const card = document.createElement("a");
@@ -22,7 +10,7 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     const img = document.createElement("img");
     img.className = "case-study-card-image";
     img.src = caseStudy.image;
-    img.alt = getMessage(`caseStudy.${caseStudy.id}.title`);
+    img.alt = caseStudy.title;
     img.loading = "lazy";
 
     const body = document.createElement("div");
@@ -30,11 +18,11 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
 
     const title = document.createElement("h3");
     title.className = "case-study-card-title";
-    title.textContent = getMessage(`caseStudy.${caseStudy.id}.title`);
+    title.textContent = caseStudy.title;
 
     const summary = document.createElement("p");
     summary.className = "case-study-card-summary";
-    summary.textContent = getMessage(`caseStudy.${caseStudy.id}.summary`);
+    summary.textContent = caseStudy.problem;
 
     const tagList = document.createElement("div");
     tagList.className = "case-study-card-tags";
@@ -51,17 +39,32 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     return card;
 }
 
-function loadCaseStudies(): void {
+function loadResumeButton(): void {
+
+    const resumeLink = document.getElementById("resume-download");
+    if (resumeLink === null) {
+        return;
+    }
+
+    resumeLink.textContent = getMessage("experience.resumeDownload");
+}
+
+async function loadCaseStudies(): Promise<void> {
     if (pageId() !== "projects") {
         return;
     }
 
-    const grid = document.getElementById("subpage-sample-content");
+    const grid = document.getElementById("subpage-insta-content");
     if (grid === null) {
         return;
     }
 
-    grid.replaceChildren(...CASE_STUDIES.map(renderCaseStudyCard));
+    try {
+        const caseStudies = await loadCaseStudyData();
+        grid.replaceChildren(...caseStudies.map(renderCaseStudyCard));
+    } catch (error: unknown) {
+        console.error("Unable to load case studies:", error);
+    }
 }
 
 function loadNavbar(): void {
@@ -251,11 +254,13 @@ function loadFooter(): void {
 async function init(): Promise<void> {
     try {
         await loadMessages();
+        await loadCaseStudies();
         loadNavbar();
         loadNavigation();
         loadParallax();
         loadContent();
-        loadCaseStudies();
+        loadResumeButton();
+        loadContactForm();
         loadFooter();
         appendCacheBusterToExistingScripts();
     } catch (error: unknown) {
