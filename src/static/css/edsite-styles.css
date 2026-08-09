@@ -444,6 +444,14 @@ form {
   min-height: 16px;
 }
 
+#contact-form-status.field-error-message {
+  display: block;
+  font-size: 13px;
+  color: #b3261e;
+  margin: 32px auto;
+  min-height: 16px;
+}
+
 [page-id=about] #subpage-hero {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/src/static/images/edsite-subpage-hero-about.PNG");
   background-size: cover;

@@ -107,6 +107,7 @@ function buildContactForm(): HTMLFormElement {
 
     const status = document.createElement("p");
     status.id = "contact-form-status";
+    status.className = "field-error-message";
     status.setAttribute("role", "status");
 
     form.append(submitButton, status);
