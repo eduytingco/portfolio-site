@@ -1,7 +1,7 @@
 [
   {
     "id": "homepage-carousel",
-    "image": "/src/static/images/homepage-carousel-case-study.png",
+    "image": "/static/images/homepage-carousel-case-study.png",
     "tags": ["design", "frontEnd"],
     "title": "Customizable homepage carousel",
     "subtitle": "Design + front-end build · Enterprise marketing site",
@@ -16,7 +16,7 @@
   },
   {
     "id": "eerd",
-    "image": "/src/static/images/eerd-case-study.png",
+    "image": "/static/images/eerd-case-study.png",
     "tags": ["design", "frontEnd"],
     "title": "Responsive end-equipment reference diagram",
     "subtitle": "Design + front-end build · Enterprise marketing site",
@@ -28,5 +28,20 @@
     "approach": "Built a responsive display to adapt the diagram and related product panel layout to different screen sizes.",
     "result": "Display had a better flow, making it easier for customers to find related products and reference designs.",
     "reflection": "Engineers submitting diagrams found it easier to design them based on how they'd actually display on the web page."
+  },
+  {
+    "id": "react-taskforce",
+    "image": "/static/images/react-taskforce-case-study.png",
+    "tags": ["design", "frontEnd"],
+    "title": "REACT Task Force website redesign",
+    "subtitle": "Design + WordPress build · Public sector site",
+    "problem": "REACT Task Force, a Santa Clara County District Attorney team investigating cybercrimes like cryptocurrency scams, pig butchering scams, ID theft, and high-tech crime, had a website that gave visitors no good navigation or useful information.",
+    "constraints": [
+      { "title": "Public information only", "desc": "Site was scoped to crime-related information, not a blog" },
+      { "title": "Non-technical staff", "desc": "Content needed to be manageable without engineering support" }
+    ],
+    "approach": "Built and designed the site in WordPress so task force staff could have autonomy over the website's content.",
+    "result": "With that autonomy, the task force was able to provide timely updates, news, and informative crime-related scam alerts in real time.",
+    "reflection": "The task force has been excited about having the ability to control the content on the new design."
   }
 ]

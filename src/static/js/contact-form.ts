@@ -93,7 +93,7 @@ function clearFieldError(wrapper: HTMLElement, input: HTMLElement, errorEl: HTML
 function buildContactForm(): HTMLFormElement {
     const form = document.createElement("form");
     form.id = "contact-form";
-    form.action = "https://formspree.io/f/xyzabc123";
+    form.action = "https://formspree.io/f/xkjwoenq";
     form.method = "POST";
     form.setAttribute("novalidate", ""); // we handle validation ourselves
 

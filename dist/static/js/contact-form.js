@@ -61,7 +61,7 @@ function clearFieldError(wrapper, input, errorEl) {
 function buildContactForm() {
     const form = document.createElement("form");
     form.id = "contact-form";
-    form.action = "https://formspree.io/f/xyzabc123";
+    form.action = "https://formspree.io/f/xkjwoenq";
     form.method = "POST";
     form.setAttribute("novalidate", ""); // we handle validation ourselves
     const builtFields = CONTACT_FIELDS.map(buildField);
