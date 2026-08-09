@@ -1,9 +1,8 @@
-name: Build and Deploy Pages
+name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, master]
-  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -18,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,13 +37,15 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Remove dev dependencies from publish folder
+        run: rm -rf node_modules
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
   deploy:
-    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
