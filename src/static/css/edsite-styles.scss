@@ -7,6 +7,7 @@
     --scroll: 0;
     --default-bg: #000;
     --borders: #e7e7e7;
+    --button-bg: #333;
 }
 
 *,
@@ -405,20 +406,50 @@ main {
 $error-color: #b3261e;
 $error-bg: #fdecea;
 
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid rgb(0 0 0 / 12%);
+}
+
 .form-field {
+    column-gap: 25px;
+    display: flex;
+    flex-direction: row;
+    column-count: 2;
+    padding: .5rem 0;
+
     &.has-error {
         label {
             color: $error-color;
         }
     }
 
+    label {
+        font-weight: 700;
+        margin-bottom: 4px;
+        width: 30%;
+        text-align: right;
+    }
+
     input,
     textarea {
+        width: max-content;
+
         &.is-invalid {
             border-color: $error-color;
             background: $error-bg;
         }
+
+        width: 40%;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
     }
+
 }
 
 .field-error-message {
@@ -430,12 +461,10 @@ $error-bg: #fdecea;
 }
 
 @mixin overlay-bg($url, $opacity1: 0.6, $opacity2: 0.8, $color: #000) {
-  background-image: linear-gradient(
-    rgba($color, $opacity1), 
-    rgba($color, $opacity2)
-  ), url($url);
-  background-size: cover;
-  background-position: center;
+    background-image: linear-gradient(rgba($color, $opacity1),
+            rgba($color, $opacity2)), url($url);
+    background-size: cover;
+    background-position: center;
 }
 
 
@@ -495,6 +524,19 @@ footer {
         column-gap: 2rem;
         column-rule: 1px double rgb(0 0 0 / 8%);
         column-fill: balance;
+    }
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 16px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 235px 0 auto;
+
+    &:hover {
+        background: #666;
     }
 }
 
@@ -638,6 +680,53 @@ footer {
         }
     }
 
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 1rem;
+        border: 1px solid rgb(0 0 0 / 12%);
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        padding: .5rem 0;
+
+        &.has-error {
+            label {
+                color: $error-color;
+            }
+        }
+
+        label {
+            font-weight: 700;
+            margin-bottom: 4px;
+            width: auto;
+            text-align: left;
+        }
+
+        input,
+        textarea {
+            width: max-content;
+
+            &.is-invalid {
+                border-color: $error-color;
+                background: $error-bg;
+            }
+
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+        }
+    }
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
 }
 
 $case-study-border: #e2e0d8;

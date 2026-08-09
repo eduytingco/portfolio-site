@@ -8,6 +8,7 @@
   --scroll: 0;
   --default-bg: #000;
   --borders: #e7e7e7;
+  --button-bg: #333;
 }
 
 *,
@@ -390,13 +391,49 @@ main {
   height: auto;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.form-field {
+  -moz-column-gap: 25px;
+       column-gap: 25px;
+  display: flex;
+  flex-direction: row;
+  -moz-column-count: 2;
+       column-count: 2;
+  padding: 0.5rem 0;
+}
 .form-field.has-error label {
   color: #b3261e;
+}
+.form-field label {
+  font-weight: 700;
+  margin-bottom: 4px;
+  width: 30%;
+  text-align: right;
+}
+.form-field input,
+.form-field textarea {
+  width: -moz-max-content;
+  width: max-content;
 }
 .form-field input.is-invalid,
 .form-field textarea.is-invalid {
   border-color: #b3261e;
   background: #fdecea;
+}
+.form-field input,
+.form-field textarea {
+  width: 40%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
 }
 
 .field-error-message {
@@ -470,6 +507,19 @@ footer {
        column-rule: 1px double rgba(0, 0, 0, 0.08);
   -moz-column-fill: balance;
        column-fill: balance;
+}
+
+button {
+  background-color: #333;
+  color: #fff;
+  padding: 8px 16px;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  margin: 0 235px 0 auto;
+}
+button:hover {
+  background: #666;
 }
 
 @keyframes scroll-bounce {
@@ -583,6 +633,49 @@ footer {
   }
   [page-id] #subpage-hero-title {
     font-size: 44px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+  .form-field.has-error label {
+    color: #b3261e;
+  }
+  .form-field label {
+    font-weight: 700;
+    margin-bottom: 4px;
+    width: auto;
+    text-align: left;
+  }
+  .form-field input,
+  .form-field textarea {
+    width: -moz-max-content;
+    width: max-content;
+  }
+  .form-field input.is-invalid,
+  .form-field textarea.is-invalid {
+    border-color: #b3261e;
+    background: #fdecea;
+  }
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+  }
+  button {
+    width: 100%;
+    margin: 0;
   }
 }
 #subpage-sample-content {
