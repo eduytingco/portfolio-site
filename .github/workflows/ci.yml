@@ -36,6 +36,8 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Remove dev dependencies from publish folder
         run: rm -rf node_modules
