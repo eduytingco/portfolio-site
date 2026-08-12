@@ -29,5 +29,9 @@
   "exclude": [
     "node_modules",
     "dist"
-  ]
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "mkdir -p dist/data && cp src/data/case-studies.json dist/data/case-studies.json"
+  }
 }

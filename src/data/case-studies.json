@@ -1,7 +1,7 @@
 [
   {
     "id": "homepage-carousel",
-    "image": "/static/images/homepage-carousel-case-study.png",
+    "image": "/src/static/images/homepage-carousel-case-study.png",
     "tags": ["design", "frontEnd"],
     "title": "Customizable homepage carousel",
     "subtitle": "Design + front-end build · Enterprise marketing site",
@@ -16,7 +16,7 @@
   },
   {
     "id": "eerd",
-    "image": "/static/images/eerd-case-study.png",
+    "image": "/src/static/images/eerd-case-study.png",
     "tags": ["design", "frontEnd"],
     "title": "Responsive end-equipment reference diagram",
     "subtitle": "Design + front-end build · Enterprise marketing site",
@@ -31,7 +31,7 @@
   },
   {
     "id": "react-taskforce",
-    "image": "/static/images/react-taskforce-case-study.png",
+    "image": "/src/static/images/react-taskforce-case-study.png",
     "tags": ["design", "frontEnd"],
     "title": "REACT Task Force website redesign",
     "subtitle": "Design + WordPress build · Public sector site",
