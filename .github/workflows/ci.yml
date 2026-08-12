@@ -79,18 +79,23 @@ jobs:
       - name: Build TypeScript
         run: npm run build
 
+      - name: Remove dev dependencies from publish folder
+        run: rm -rf node_modules
+
       - name: Deploy to uytingco.com via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./
-          server-dir: /home/u585272320/domains/uytingco.com/public_html/ed/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/actions-runner/**
-            **/dist/**/*.map
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate false;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" ftps://$FTP_SERVER;
+            mirror --reverse --delete --verbose \
+              --exclude-glob .git* \
+              --exclude actions-runner/ \
+              . /home/u585272320/domains/uytingco.com/public_html/ed/
+          "
