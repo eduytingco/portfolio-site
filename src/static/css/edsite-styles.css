@@ -42,6 +42,7 @@ body {
 main[role=subpage] {
   flex-grow: 1;
   color: var(--surface-text);
+  padding-bottom: 32px;
 }
 
 a {
@@ -401,7 +402,7 @@ form {
   flex-direction: column;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto 32px;
+  margin: 0 auto;
   padding: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
@@ -695,6 +696,12 @@ button:hover {
   }
 }
 #subpage-sample-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+[page-id=projects] #subpage-insta-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
