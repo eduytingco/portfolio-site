@@ -92,6 +92,9 @@ function clearFieldError(wrapper: HTMLElement, input: HTMLElement, errorEl: HTML
 
 function buildContactForm(): HTMLFormElement {
     const form = document.createElement("form");
+    const submitWrapper = document.createElement("div");
+    submitWrapper.className = "form-field";
+    submitWrapper.className += " form-field-submit";
     form.id = "contact-form";
     form.action = "https://formspree.io/f/xkjwoenq";
     form.method = "POST";
@@ -104,13 +107,14 @@ function buildContactForm(): HTMLFormElement {
     submitButton.id = "contact-form-submit";
     submitButton.type = "submit";
     submitButton.textContent = getMessage("contact.form.submit");
+    submitWrapper.appendChild(submitButton);
 
     const status = document.createElement("p");
     status.id = "contact-form-status";
     status.className = "field-error-message";
     status.setAttribute("role", "status");
 
-    form.append(submitButton, status);
+    form.append(submitWrapper, status);
 
     function validateAll(): boolean {
         let isValid = true;
@@ -128,6 +132,8 @@ function buildContactForm(): HTMLFormElement {
                 clearFieldError(wrapper, input, errorEl);
             }
         });
+
+        status.classList.toggle("invalid", !isValid);
 
         if (firstInvalid !== null) {
             (firstInvalid as HTMLElement).focus();

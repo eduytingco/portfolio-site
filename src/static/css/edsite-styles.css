@@ -359,6 +359,11 @@ main {
   font-size: 1.5rem;
 }
 
+button, input[type=submit] {
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
 [page-id] #subpage-hero {
   background: var(--surface);
   background-image: url(/src/static/images/edsite-subpage-hero-about.PNG);
@@ -396,7 +401,7 @@ form {
   flex-direction: column;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 0 auto 32px;
   padding: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
@@ -448,8 +453,11 @@ form {
   display: block;
   font-size: 13px;
   color: #b3261e;
-  margin: 32px auto;
+  margin-top: 4px;
   min-height: 16px;
+}
+#contact-form-status.invalid {
+  margin: 32px auto;
 }
 
 [page-id=about] #subpage-hero {
