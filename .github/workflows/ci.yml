@@ -82,26 +82,29 @@ jobs:
       - name: Remove dev dependencies from publish folder
         run: rm -rf node_modules
 
-      - name: Deploy to uytingco.com via FTPS
+      - name: Deploy to uytingco.com via SFTP
         timeout-minutes: 10
         env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SFTP_SERVER: ${{ secrets.SFTP_SERVER }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           sudo apt-get update && sudo apt-get install -y lftp
-          lftp -c "
-            set net:timeout 15;
-            set net:max-retries 2;
+          key_file="$RUNNER_TEMP/deploy_key"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$key_file"
+          chmod 600 "$key_file"
+          port="${SFTP_PORT:-22}"
+          lftp -d -c "
+            set net:timeout 30;
+            set net:max-retries 5;
             set net:reconnect-interval-base 5;
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set ftp:passive-mode true;
-            set ssl:verify-certificate false;
-            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" ftps://$FTP_SERVER;
+            set sftp:connect-program \"ssh -a -x -i $key_file -o StrictHostKeyChecking=accept-new\";
+            set xfer:log true;
+            open -u \"$SFTP_USERNAME\", -p $port sftp://$SFTP_SERVER;
             mirror --reverse --delete --verbose \
               --exclude-glob .git* \
               --exclude actions-runner/ \
               . /home/u585272320/domains/uytingco.com/public_html/ed/
           "
-          "
+          rm -f "$key_file"

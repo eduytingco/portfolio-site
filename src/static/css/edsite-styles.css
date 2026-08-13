@@ -603,6 +603,7 @@ button:hover {
   max-height: 480px;
   margin-bottom: 3rem;
   border-radius: 12px;
+  border: 1px solid #e2e0d8;
   -o-object-fit: cover;
      object-fit: cover;
   background: #f4f3ef;
@@ -855,6 +856,10 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
+}
+
+.case-study-card-body {
+  border-top: 1px solid #e2e0d8;
 }
 
 .case-study-card {

@@ -640,6 +640,7 @@ $case-study-tag-color: #0C447C;
     max-height: 480px;
     margin-bottom: 3rem;
     border-radius: 12px;
+    border: 1px solid $case-study-border;
     object-fit: cover;
     background: $case-study-image-bg;
 }
@@ -942,6 +943,10 @@ $case-study-tag-color: #0C447C;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
+}
+
+.case-study-card-body {
+    border-top: 1px solid $case-study-border;
 }
 
 .case-study-card {
