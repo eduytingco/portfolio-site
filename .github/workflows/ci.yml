@@ -83,6 +83,7 @@ jobs:
         run: rm -rf node_modules
 
       - name: Deploy to uytingco.com via FTPS
+        timeout-minutes: 10
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -90,12 +91,17 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y lftp
           lftp -c "
+            set net:timeout 15;
+            set net:max-retries 2;
+            set net:reconnect-interval-base 5;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
+            set ftp:passive-mode true;
             set ssl:verify-certificate false;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" ftps://$FTP_SERVER;
             mirror --reverse --delete --verbose \
               --exclude-glob .git* \
               --exclude actions-runner/ \
               . /home/u585272320/domains/uytingco.com/public_html/ed/
+          "
           "
