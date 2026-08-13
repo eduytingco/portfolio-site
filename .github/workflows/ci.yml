@@ -99,7 +99,7 @@ jobs:
             set net:timeout 30;
             set net:max-retries 5;
             set net:reconnect-interval-base 5;
-            set sftp:connect-program \"ssh -a -x -i $key_file -o StrictHostKeyChecking=accept-new\";
+            set sftp:connect-program \"ssh -a -x -i $key_file -o StrictHostKeyChecking=accept-new -o BatchMode=yes\";
             set xfer:log true;
             open -u \"$SFTP_USERNAME\", -p $port sftp://$SFTP_SERVER;
             mirror --reverse --delete --verbose \
