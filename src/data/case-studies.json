@@ -2,13 +2,22 @@
   {
     "id": "homepage-carousel",
     "image": "/src/static/images/homepage-carousel-case-study.png",
-    "tags": ["design", "frontEnd"],
+    "tags": [
+      "design",
+      "frontEnd"
+    ],
     "title": "Customizable homepage carousel",
     "subtitle": "Design + front-end build · Enterprise marketing site",
     "problem": "Marketing needed to customize homepage carousel slides by target audience without engineering involvement each time.",
     "constraints": [
-      { "title": "Multi-region", "desc": "Content needed translation support across regions" },
-      { "title": "Third-party A/B testing", "desc": "Component had to integrate with an external test platform" }
+      {
+        "title": "Multi-region",
+        "desc": "Content needed translation support across regions"
+      },
+      {
+        "title": "Third-party A/B testing",
+        "desc": "Component had to integrate with an external test platform"
+      }
     ],
     "approach": "Built a slide component with configurable audience targeting, structured so copy and imagery stayed swappable per locale and per A/B variant served by the third-party platform.",
     "result": "Delivered a customizable widget, built on the third-party platform, where a marketer's custom slide overrides the existing homepage carousel.",
@@ -17,13 +26,22 @@
   {
     "id": "eerd",
     "image": "/src/static/images/eerd-case-study.png",
-    "tags": ["design", "frontEnd"],
+    "tags": [
+      "design",
+      "frontEnd"
+    ],
     "title": "Responsive end-equipment reference diagram",
     "subtitle": "Design + front-end build · Enterprise marketing site",
     "problem": "End-equipment diagram and related product information display was unorganized.",
     "constraints": [
-      { "title": "Limited viewport", "desc": "Especially constrained on laptop, tablet, and mobile devices" },
-      { "title": "Dense reference content", "desc": "Diagram and related product listings needed to coexist on screen" }
+      {
+        "title": "Limited viewport",
+        "desc": "Especially constrained on laptop, tablet, and mobile devices"
+      },
+      {
+        "title": "Dense reference content",
+        "desc": "Diagram and related product listings needed to coexist on screen"
+      }
     ],
     "approach": "Built a responsive display to adapt the diagram and related product panel layout to different screen sizes.",
     "result": "Display had a better flow, making it easier for customers to find related products and reference designs.",
@@ -32,13 +50,22 @@
   {
     "id": "react-taskforce",
     "image": "/src/static/images/react-taskforce-case-study.png",
-    "tags": ["design", "frontEnd"],
+    "tags": [
+      "design",
+      "frontEnd"
+    ],
     "title": "REACT Task Force website redesign",
     "subtitle": "Design + WordPress build · Public sector site",
     "problem": "REACT Task Force, a Santa Clara County District Attorney team investigating cybercrimes like cryptocurrency scams, pig butchering scams, ID theft, and high-tech crime, had a website that gave visitors no good navigation or useful information.",
     "constraints": [
-      { "title": "Public information only", "desc": "Site was scoped to crime-related information, not a blog" },
-      { "title": "Non-technical staff", "desc": "Content needed to be manageable without engineering support" }
+      {
+        "title": "Public information only",
+        "desc": "Site was scoped to crime-related information, not a blog"
+      },
+      {
+        "title": "Non-technical staff",
+        "desc": "Content needed to be manageable without engineering support"
+      }
     ],
     "approach": "Built and designed the site in WordPress so task force staff could have autonomy over the website's content.",
     "result": "With that autonomy, the task force was able to provide timely updates, news, and informative crime-related scam alerts in real time.",
