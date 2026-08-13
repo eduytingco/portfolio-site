@@ -111,7 +111,7 @@ function loadParallax() {
 }
 function pageId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("page") || "home";
+    return urlParams.get("page") || "case-study";
 }
 function setText(id, key) {
     const element = document.getElementById(id);

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title id="page-title"></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/static/css/edsite-styles.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="ed-favicon-brand.svg">
+    <link rel="stylesheet" href="src/static/css/edsite-styles.css" />
+    <title>Ed Uytingco Online Portfolio</title>
 </head>
-<body page-id="">
 
+<body>
     <header>
         <nav id="subpage-nav" class="site-nav subpage" aria-label="Primary navigation">
             <a class="brand" href="index.html" aria-label="Ed Uytingco home" title="Ed Uytingco Online Portfolio Home">
@@ -23,49 +25,68 @@
                 <li><a href="pages.html?page=projects" nav-link-id="projects">{nav.projects}</a></li>
                 <li><a href="pages.html?page=experience" nav-link-id="experience">{nav.experience}</a></li>
                 <li><a href="pages.html?page=contact" nav-link-id="contact">{nav.contact}</a></li>
+                <li><a id="resume-download" nav-link-id="resume" href="/src/static/documents/resume.pdf" download
+                        rel="noopener">{experience.resumeDownload}</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="case-study-detail">
-        <a href="/?page=projects" id="case-study-back">← Back to projects</a>
-
-        <header class="case-study-header">
-            <h1 id="case-study-title"></h1>
-            <p id="case-study-subtitle"></p>
-        </header>
-
-        <img id="case-study-image" class="case-study-image" alt="" loading="lazy">
-
-        <section class="case-study-section">
-            <h2 class="case-study-label">Problem</h2>
-            <p id="case-study-problem"></p>
+    <main role="subpage" page-id="">
+        <section id="subpage-hero">
+            <div id="subpage-hero-content" class="container">
+                <h1 id="subpage-hero-title"></h1>
+            </div>
         </section>
-
-        <section class="case-study-section">
-            <h2 class="case-study-label">Constraints</h2>
-            <div id="case-study-constraints" class="case-study-constraints-grid"></div>
+        <section id="subpage-content">
+            <div id="subpage-content-container" class="container">
+                <p id="subpage-content-description" class="text-block"></p>
+            </div>
         </section>
+        <section id="subpage-insta-container">
+            <div id="subpage-insta-content" class="container">
+                <div id="case-study-detail">
+                    <a href="pages.html?page=projects" id="case-study-back">← Back to projects</a>
 
-        <section class="case-study-section">
-            <h2 class="case-study-label">Approach</h2>
-            <p id="case-study-approach"></p>
-        </section>
+                    <header class="case-study-header">
+                        <h1 id="case-study-title"></h1>
+                        <p id="case-study-subtitle"></p>
+                    </header>
 
-        <section class="case-study-section">
-            <h2 class="case-study-label">Result</h2>
-            <p id="case-study-result" class="case-study-result-box"></p>
-        </section>
+                    <img id="case-study-image" class="case-study-image" alt="" loading="lazy">
 
-        <section class="case-study-section">
-            <h2 class="case-study-label">Reflection</h2>
-            <p id="case-study-reflection"></p>
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Problem</h2>
+                        <p id="case-study-problem"></p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Constraints</h2>
+                        <div id="case-study-constraints" class="case-study-constraints-grid"></div>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Approach</h2>
+                        <p id="case-study-approach"></p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Result</h2>
+                        <p id="case-study-result" class="case-study-result-box"></p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Reflection</h2>
+                        <p id="case-study-reflection"></p>
+                    </section>
+                </div>
+            </div>
         </section>
     </main>
-
     <footer>
-        <section id="footer-case-study"><span id="footer-case-study-content" role="footer-content"></span></section>
+        <section id="footer-subpage"><span id="footer-subpage-content" role="footer-content"></span></section>
     </footer>
     <script src="dist/static/js/edsite-scripts.js" type="module"></script>
+    <script src="dist/static/js/case-study.js" type="module"></script>
 </body>
+
 </html>

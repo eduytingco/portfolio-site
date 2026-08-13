@@ -142,7 +142,7 @@ function loadParallax(): void {
 
 function pageId(): string {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("page") || "home";
+    return urlParams.get("page") || "case-study";
 }
 
 function setText(id: string, key: string): void {
