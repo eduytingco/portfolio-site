@@ -512,6 +512,7 @@ section {
     &:not(.quick-links) {
         padding: 0;
     }
+
 }
 
 .container {
@@ -531,6 +532,14 @@ section {
             line-height: 1.55
         }
     }
+}
+
+[page-id="experience"],
+[page-id="case-study"] {
+    #subpage-content-container {
+        border-bottom: 1px solid rgb(0 0 0 / 12%);
+    }
+    
 }
 
 footer {

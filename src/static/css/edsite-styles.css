@@ -512,6 +512,11 @@ section:not(.quick-links) {
   line-height: 1.55;
 }
 
+[page-id=experience] #subpage-content-container,
+[page-id=case-study] #subpage-content-container {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 footer {
   padding: 1rem;
   color: rgba(255, 255, 255, 0.65);
