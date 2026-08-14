@@ -976,6 +976,7 @@ $case-study-tag-color: #0C447C;
         aspect-ratio: 16 / 9;
         object-fit: cover;
         background: $case-study-image-bg;
+        border-bottom: 1px solid $case-study-border;
     }
 
     &-body {

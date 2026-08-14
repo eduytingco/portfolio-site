@@ -888,6 +888,7 @@ button:hover {
   -o-object-fit: cover;
      object-fit: cover;
   background: #f4f3ef;
+  border-bottom: 1px solid #e2e0d8;
 }
 .case-study-card-body {
   padding: 16px 18px;

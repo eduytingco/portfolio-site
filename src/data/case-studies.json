@@ -48,6 +48,31 @@
     "reflection": "Engineers submitting diagrams found it easier to design them based on how they'd actually display on the web page."
   },
   {
+    "id": "ti-product-page-redesign",
+    "image": "/src/static/images/ti-product-page-case-study-v2.png",
+    "tags": [
+      "design",
+      "frontEnd",
+      "Thymeleaf"
+    ],
+    "title": "TI Product Page Redesign",
+    "subtitle": "Design + Thymeleaf build · Enterprise marketing site",
+    "problem": "TI's product page had a confusing layout and lacked clear navigation for customers.",
+    "constraints": [
+      {
+        "title": "Public information only",
+        "desc": "Site was scoped to public product information, not internal documentation"
+      },
+      {
+        "title": "Non-technical staff",
+        "desc": "Content needed to be manageable without engineering support"
+      }
+    ],
+    "approach": "Built and designed the page in Thymeleaf templating purposes for easier maintenance to add new content without the need for a developer.",
+    "result": "Page had a better flow, making it easier for customers to find related products and make ordering parts easier.",
+    "reflection": "With the redesign, the product page is now easier to navigate and has a better flow for customers to find related products. As well as the ability to add new content without the need for a developer."
+  },
+  {
     "id": "react-taskforce",
     "image": "/src/static/images/react-taskforce-case-study-v2.png",
     "tags": [
