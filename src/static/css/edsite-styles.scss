@@ -469,7 +469,7 @@ form {
 #contact-form-status {
     
     &.field-error-message {
-        display: block;
+        display: none;
         font-size: 13px;
         color: $error-color;
         margin-top: 4px;
@@ -477,6 +477,7 @@ form {
     }
     &.invalid {
         margin:32px auto;
+        display: block;
     }
 }
 
@@ -534,14 +535,6 @@ section {
     }
 }
 
-[page-id="experience"],
-[page-id="case-study"] {
-    #subpage-content-container {
-        border-bottom: 1px solid rgb(0 0 0 / 12%);
-    }
-    
-}
-
 footer {
     padding: 1rem;
     color: rgb(255 255 255 / 65%);
@@ -567,6 +560,7 @@ button {
     width: fit-content;
     cursor: pointer;
     margin: 0 235px 0 auto;
+    border: none;
 
     &:hover {
         background: #666;
@@ -614,14 +608,14 @@ $case-study-tag-color: #0C447C;
 }
 
 .case-study-header {
-    margin-bottom: 2.25rem;
+    margin: 2.25rem 0;
 
     &::before {
         content: "Case study";
         display: block;
         margin-bottom: .6rem;
         color: $case-study-summary-color;
-        font-size: .85rem;
+        font-size: 1.7rem;
         font-weight: 500;
     }
 }
@@ -652,11 +646,13 @@ $case-study-tag-color: #0C447C;
     border: 1px solid $case-study-border;
     object-fit: cover;
     background: $case-study-image-bg;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
 }
 
 .case-study-section {
     padding: 2.25rem 0;
     border-top: 1px solid $case-study-border;
+    margin-bottom: 2.25rem;
 
     &:first-of-type {
         border-top: 0;
@@ -677,6 +673,7 @@ $case-study-tag-color: #0C447C;
     align-items: center;
     gap: .55rem;
     margin: 0 0 1rem;
+    padding-top: 1.25rem;
     color: $case-study-title-color;
     font-size: 1.05rem;
     font-weight: 700;
@@ -1035,7 +1032,6 @@ $case-study-tag-color: #0C447C;
     border-top: 1px solid $case-study-border;
 
     &:first-child {
-        padding-top: 0;
         border-top: 0;
     }
 }
@@ -1149,5 +1145,153 @@ $case-study-tag-color: #0C447C;
 
     .scroll-indicator {
         animation: none
+    }
+}
+
+@mixin glass-backdrop {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+            radial-gradient(560px circle at 85% 6%, rgb(217 167 42 / 30%), transparent 60%),
+            radial-gradient(500px circle at 8% 30%, rgb(140 190 210 / 24%), transparent 60%),
+            radial-gradient(620px circle at 60% 90%, rgb(217 167 42 / 16%), transparent 55%),
+            var(--surface);
+    }
+
+    @media (prefers-reduced-motion: reduce), (max-width: 480px) {
+        &::before {
+            background: var(--surface);
+        }
+    }
+}
+
+@mixin glass-surface($radius: 20px) {
+    background: rgb(255 255 255 / 55%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: $radius;
+    box-shadow:
+        0 8px 32px rgb(0 0 0 / 12%),
+        inset 0 1px 0 rgb(255 255 255 / 60%);
+}
+
+[page-id="experience"] main[role="subpage"] {
+    @include glass-backdrop;
+}
+
+[page-id="experience"] #subpage-insta-content {
+    width: min(92%, 860px);
+    margin: 0 auto;
+    padding: 3.5rem 0 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.experience-entry {
+    @include glass-surface(20px);
+    padding: 2rem 2.25rem;
+}
+
+[page-id="projects"] main[role="subpage"] {
+    @include glass-backdrop;
+}
+
+.case-study-card {
+    @include glass-surface(20px);
+    overflow: hidden; // keep image corners clipped to the radius
+
+    &:hover {
+        border-color: rgb(255 255 255 / 60%);
+        box-shadow:
+            0 12px 36px rgb(0 0 0 / 16%),
+            inset 0 1px 0 rgb(255 255 255 / 70%);
+        transform: translateY(-2px);
+    }
+}
+
+.case-study-card-body {
+    border-top: 1px solid rgb(255 255 255 / 40%);
+}
+
+[page-id="experience"] main[role="subpage"] {
+    @include glass-backdrop;
+}
+
+[page-id="experience"] #subpage-insta-content {
+    width: min(92%, 860px);
+    margin: 0 auto;
+    padding: 3.5rem 0 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.experience-entry {
+    @include glass-surface(20px);
+    padding: 2rem 2.25rem;
+}
+
+// ============================================================
+// Contact form — glass treatment
+// Same shared mixins (glass-backdrop / glass-surface), applied
+// to the form container. Inputs stay solid/opaque for legibility
+// and contrast — only the form's own surface goes glass.
+// ============================================================
+
+[page-id="contact"] main[role="subpage"] {
+    @include glass-backdrop;
+}
+
+form {
+    @include glass-surface(20px);
+    padding: 2rem;
+
+    // override the plain border the base `form` rule already sets —
+    // glass-surface's translucent border replaces it
+    border: 1px solid rgb(255 255 255 / 40%);
+}
+
+.form-field {
+    &.has-error {
+        label {
+            color: $error-color;
+        }
+    }
+
+    input,
+    textarea {
+        // deliberately NOT glass — inputs need reliable contrast for
+        // typed text and focus states, so keep them solid over the
+        // translucent form background
+        background: rgb(255 255 255 / 85%);
+        border: 1px solid rgb(0 0 0 / 15%);
+
+        &.is-invalid {
+            border-color: $error-color;
+            background: $error-bg;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+        }
+    }
+}
+
+#contact-form-status {
+    &.field-error-message {
+        background: rgb(253 236 234 / 85%); // frosted version of $error-bg
+        padding: .5rem .75rem;
+        border-radius: 8px;
     }
 }

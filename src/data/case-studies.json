@@ -1,7 +1,7 @@
 [
   {
     "id": "homepage-carousel",
-    "image": "/src/static/images/homepage-carousel-case-study.png",
+    "image": "/src/static/images/homepage-carousel-case-study-v2.png",
     "tags": [
       "design",
       "frontEnd"
@@ -25,7 +25,7 @@
   },
   {
     "id": "eerd",
-    "image": "/src/static/images/eerd-case-study.png",
+    "image": "/src/static/images/eerd-case-study-v2.png",
     "tags": [
       "design",
       "frontEnd"
@@ -49,7 +49,7 @@
   },
   {
     "id": "react-taskforce",
-    "image": "/src/static/images/react-taskforce-case-study.png",
+    "image": "/src/static/images/react-taskforce-case-study-v2.png",
     "tags": [
       "design",
       "frontEnd"
@@ -67,7 +67,7 @@
         "desc": "Content needed to be manageable without engineering support"
       }
     ],
-    "approach": "Built and designed the site in WordPress so task force staff could have autonomy over the website's content.",
+    "approach": "Built and designed the site in WordPress so staff could have content autonomy, prototyping early layout and navigation directions with Claude to quickly compare options before finalizing the design in Figma and implementing it in WordPress.",
     "result": "With that autonomy, the task force was able to provide timely updates, news, and informative crime-related scam alerts in real time.",
     "reflection": "The task force has been excited about having the ability to control the content on the new design."
   }

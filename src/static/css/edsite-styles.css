@@ -451,7 +451,7 @@ form {
 }
 
 #contact-form-status.field-error-message {
-  display: block;
+  display: none;
   font-size: 13px;
   color: #b3261e;
   margin-top: 4px;
@@ -459,6 +459,7 @@ form {
 }
 #contact-form-status.invalid {
   margin: 32px auto;
+  display: block;
 }
 
 [page-id=about] #subpage-hero {
@@ -512,11 +513,6 @@ section:not(.quick-links) {
   line-height: 1.55;
 }
 
-[page-id=experience] #subpage-content-container,
-[page-id=case-study] #subpage-content-container {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
 footer {
   padding: 1rem;
   color: rgba(255, 255, 255, 0.65);
@@ -545,6 +541,7 @@ button {
   width: fit-content;
   cursor: pointer;
   margin: 0 235px 0 auto;
+  border: none;
 }
 button:hover {
   background: #666;
@@ -574,14 +571,14 @@ button:hover {
 }
 
 .case-study-header {
-  margin-bottom: 2.25rem;
+  margin: 2.25rem 0;
 }
 .case-study-header::before {
   content: "Case study";
   display: block;
   margin-bottom: 0.6rem;
   color: #6b6a62;
-  font-size: 0.85rem;
+  font-size: 1.7rem;
   font-weight: 500;
 }
 
@@ -612,11 +609,13 @@ button:hover {
   -o-object-fit: cover;
      object-fit: cover;
   background: #f4f3ef;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .case-study-section {
   padding: 2.25rem 0;
   border-top: 1px solid #e2e0d8;
+  margin-bottom: 2.25rem;
 }
 .case-study-section:first-of-type {
   border-top: 0;
@@ -635,6 +634,7 @@ button:hover {
   align-items: center;
   gap: 0.55rem;
   margin: 0 0 1rem;
+  padding-top: 1.25rem;
   color: #1a1a18;
   font-size: 1.05rem;
   font-weight: 700;
@@ -931,7 +931,6 @@ button:hover {
   border-top: 1px solid #e2e0d8;
 }
 .experience-entry:first-child {
-  padding-top: 0;
   border-top: 0;
 }
 
@@ -1041,4 +1040,172 @@ button:hover {
   .scroll-indicator {
     animation: none;
   }
+}
+[page-id=experience] main[role=subpage] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[page-id=experience] main[role=subpage]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(560px circle at 85% 6%, rgba(217, 167, 42, 0.3), transparent 60%), radial-gradient(500px circle at 8% 30%, rgba(140, 190, 210, 0.24), transparent 60%), radial-gradient(620px circle at 60% 90%, rgba(217, 167, 42, 0.16), transparent 55%), var(--surface);
+}
+@media (prefers-reduced-motion: reduce), (max-width: 480px) {
+  [page-id=experience] main[role=subpage]::before {
+    background: var(--surface);
+  }
+}
+
+[page-id=experience] #subpage-insta-content {
+  width: min(92%, 860px);
+  margin: 0 auto;
+  padding: 3.5rem 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.experience-entry {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 2rem 2.25rem;
+}
+
+[page-id=projects] main[role=subpage] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[page-id=projects] main[role=subpage]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(560px circle at 85% 6%, rgba(217, 167, 42, 0.3), transparent 60%), radial-gradient(500px circle at 8% 30%, rgba(140, 190, 210, 0.24), transparent 60%), radial-gradient(620px circle at 60% 90%, rgba(217, 167, 42, 0.16), transparent 55%), var(--surface);
+}
+@media (prefers-reduced-motion: reduce), (max-width: 480px) {
+  [page-id=projects] main[role=subpage]::before {
+    background: var(--surface);
+  }
+}
+
+.case-study-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+}
+.case-study-card:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.case-study-card-body {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+[page-id=experience] main[role=subpage] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[page-id=experience] main[role=subpage]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(560px circle at 85% 6%, rgba(217, 167, 42, 0.3), transparent 60%), radial-gradient(500px circle at 8% 30%, rgba(140, 190, 210, 0.24), transparent 60%), radial-gradient(620px circle at 60% 90%, rgba(217, 167, 42, 0.16), transparent 55%), var(--surface);
+}
+@media (prefers-reduced-motion: reduce), (max-width: 480px) {
+  [page-id=experience] main[role=subpage]::before {
+    background: var(--surface);
+  }
+}
+
+[page-id=experience] #subpage-insta-content {
+  width: min(92%, 860px);
+  margin: 0 auto;
+  padding: 3.5rem 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.experience-entry {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 2rem 2.25rem;
+}
+
+[page-id=contact] main[role=subpage] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[page-id=contact] main[role=subpage]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(560px circle at 85% 6%, rgba(217, 167, 42, 0.3), transparent 60%), radial-gradient(500px circle at 8% 30%, rgba(140, 190, 210, 0.24), transparent 60%), radial-gradient(620px circle at 60% 90%, rgba(217, 167, 42, 0.16), transparent 55%), var(--surface);
+}
+@media (prefers-reduced-motion: reduce), (max-width: 480px) {
+  [page-id=contact] main[role=subpage]::before {
+    background: var(--surface);
+  }
+}
+
+form {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.form-field.has-error label {
+  color: #b3261e;
+}
+.form-field input,
+.form-field textarea {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.form-field input.is-invalid,
+.form-field textarea.is-invalid {
+  border-color: #b3261e;
+  background: #fdecea;
+}
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+#contact-form-status.field-error-message {
+  background: rgba(253, 236, 234, 0.85);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
 }/*# sourceMappingURL=edsite-styles.css.map */
