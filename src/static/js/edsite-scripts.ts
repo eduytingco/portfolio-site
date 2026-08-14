@@ -1,5 +1,6 @@
 import { loadMessages, getMessage, appendCacheBusterToExistingScripts } from "./i18n.js";
 import { loadCaseStudyData, type CaseStudy } from "./case-study-data.js";
+import { loadExperienceData, type Experience } from "./experience-data.js";
 import { loadContactForm } from "./contact-form.js";
 
 function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
@@ -39,6 +40,73 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     return card;
 }
 
+function renderExperienceStack(stack: string[]): HTMLElement {
+    const list = document.createElement("ul");
+    list.className = "experience-stack-list";
+
+    list.append(
+        ...stack.map((item) => {
+            const tag = document.createElement("li");
+            tag.className = "experience-stack-tag";
+            tag.textContent = item;
+            return tag;
+        })
+    );
+
+    return list;
+}
+
+function renderExperienceBullets(experience: Experience): HTMLElement {
+    const list = document.createElement("ul");
+    list.className = "experience-bullet-list";
+
+    list.append(
+        ...experience.bullets.map((bullet) => {
+            const item = document.createElement("li");
+            item.className = "experience-bullet";
+            item.textContent = bullet;
+            return item;
+        })
+    );
+
+    return list;
+}
+
+function renderExperienceEntry(experience: Experience): HTMLElement {
+    const entry = document.createElement("article");
+    entry.className = "experience-entry";
+
+    const header = document.createElement("div");
+    header.className = "experience-header";
+
+    const company = document.createElement("div");
+    company.className = "experience-company";
+    company.textContent = experience.company;
+
+    const title = document.createElement("div");
+    title.className = "experience-role";
+    title.textContent = experience.title;
+
+    const dates = document.createElement("div");
+    dates.className = "experience-dates";
+    dates.textContent = experience.dates;
+
+    header.append(company, title, dates);
+
+    const summary = document.createElement("p");
+    summary.className = "experience-summary";
+    summary.textContent = experience.summary;
+
+    entry.append(
+        header,
+        summary,
+        renderExperienceBullets(experience),
+        renderExperienceStack(experience.stack)
+    );
+
+    return entry;
+}
+
 function loadResumeButton(): void {
 
     const resumeLink = document.getElementById("resume-download");
@@ -64,6 +132,24 @@ async function loadCaseStudies(): Promise<void> {
         grid.replaceChildren(...caseStudies.map(renderCaseStudyCard));
     } catch (error: unknown) {
         console.error("Unable to load case studies:", error);
+    }
+}
+
+async function loadExperience(): Promise<void> {
+    if (pageId() !== "experience") {
+        return;
+    }
+
+    const container = document.getElementById("subpage-insta-content");
+    if (container === null) {
+        return;
+    }
+
+    try {
+        const entries = await loadExperienceData();
+        container.replaceChildren(...entries.map(renderExperienceEntry));
+    } catch (error: unknown) {
+        console.error("Unable to load experience:", error);
     }
 }
 
@@ -174,9 +260,15 @@ function loadContent(): void {
         ["nav-about", "nav.about"],
         ["nav-projects", "nav.projects"],
         ["nav-experience", "nav.experience"],
-        ["nav-contact", "nav.contact"]
+        ["nav-contact", "nav.contact"],
+        ["brand-name", "brand.name"],
 
     ].forEach(([id, key]) => setText(id, key));
+    const brandNameElement = document.getElementById("brand-name");
+    if (brandNameElement !== null) {
+        brandNameElement.textContent = getMessage("brand.name");
+    }
+    
     const pageidelement = document.querySelector("[page-id]");
     if (pageidelement) {
         pageidelement.setAttribute("page-id", pageId());
@@ -255,6 +347,7 @@ async function init(): Promise<void> {
     try {
         await loadMessages();
         await loadCaseStudies();
+        await loadExperience();
         loadNavbar();
         loadNavigation();
         loadParallax();

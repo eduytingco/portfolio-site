@@ -912,6 +912,119 @@ button:hover {
   color: #0C447C;
 }
 
+[page-id=experience] #subpage-insta-content {
+  width: min(92%, 860px);
+  margin: 0 auto;
+  padding: 3.5rem 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.experience-entry {
+  padding-top: 2.25rem;
+  border-top: 1px solid #e2e0d8;
+}
+.experience-entry:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.experience-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  -moz-column-gap: 0.6rem;
+       column-gap: 0.6rem;
+  row-gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.experience-company {
+  color: #1a1a18;
+  font-size: 1.35rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.experience-role {
+  color: #6b6a62;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.experience-dates {
+  margin-left: auto;
+  color: #6b6a62;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.experience-summary {
+  max-width: 68ch;
+  margin: 0 0 1.25rem;
+  color: #33322e;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.experience-bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-bullet {
+  position: relative;
+  max-width: 68ch;
+  padding-left: 1.15rem;
+  color: #33322e;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+.experience-bullet::before {
+  content: "";
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.experience-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-stack-tag {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #E6F1FB;
+  color: #0C447C;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  [page-id=experience] #subpage-insta-content {
+    padding: 2.5rem 0 3.5rem;
+  }
+  .experience-dates {
+    margin-left: 0;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
