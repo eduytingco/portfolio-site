@@ -107,6 +107,52 @@ function renderExperienceEntry(experience: Experience): HTMLElement {
     return entry;
 }
 
+const ABOUT_BUILD_NOTE_SNIPPET = `@mixin glass-surface($radius: 20px) {
+    background: rgb(255 255 255 / 55%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: $radius;
+    box-shadow:
+        0 8px 32px rgb(0 0 0 / 12%),
+        inset 0 1px 0 rgb(255 255 255 / 60%);
+}`;
+
+function renderAboutBuildNote(): HTMLElement {
+    const wrapper = document.createElement("div");
+    wrapper.className = "build-note";
+
+    const intro = document.createElement("p");
+    intro.className = "build-note-intro";
+    intro.textContent = getMessage("about.buildNote.intro");
+
+    const pre = document.createElement("pre");
+    pre.className = "build-note-code";
+    const code = document.createElement("code");
+    code.textContent = ABOUT_BUILD_NOTE_SNIPPET;
+    pre.append(code);
+
+    const caption = document.createElement("p");
+    caption.className = "build-note-caption";
+    caption.textContent = getMessage("about.buildNote.caption");
+
+    wrapper.append(intro, pre, caption);
+    return wrapper;
+}
+
+function loadAboutBuildNote(): void {
+    if (pageId() !== "about") {
+        return;
+    }
+
+    const container = document.getElementById("subpage-insta-content");
+    if (container === null) {
+        return;
+    }
+
+    container.replaceChildren(renderAboutBuildNote());
+}
+
 function loadResumeButton(): void {
 
     const resumeLink = document.getElementById("resume-download");
@@ -348,6 +394,7 @@ async function init(): Promise<void> {
         await loadMessages();
         await loadCaseStudies();
         await loadExperience();
+        loadAboutBuildNote();
         loadNavbar();
         loadNavigation();
         loadParallax();
