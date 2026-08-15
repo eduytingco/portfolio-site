@@ -73,15 +73,15 @@
     "reflection": "With the redesign, the product page is now easier to navigate and has a better flow for customers to find related products. As well as the ability to add new content without the need for a developer."
   },
   {
-    "id": "react-taskforce",
-    "image": "/src/static/images/react-taskforce-case-study-v2.png",
+    "id": "rt-taskforce",
+    "image": "/src/static/images/_react-taskforce-case-study-v2.png",
     "tags": [
       "design",
       "frontEnd"
     ],
-    "title": "REACT Task Force website redesign",
+    "title": "_REACT Task Force website redesign",
     "subtitle": "Design + WordPress build · Public sector site",
-    "problem": "REACT Task Force, is an organization investigating cybercrimes like cryptocurrency scams, pig butchering scams, ID theft, and high-tech crime, had a website that gave visitors no good navigation or useful information.",
+    "problem": "This task force, is an organization investigating cybercrimes like cryptocurrency scams, pig butchering scams, ID theft, and high-tech crime, that had an outdated website that needed frequent updates, but was not accessible to non-technical staff. They relied on the webmaster to update the site.",
     "constraints": [
       {
         "title": "Public information only",
