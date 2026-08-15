@@ -970,13 +970,20 @@ $case-study-tag-color: #0C447C;
         transform: translateY(-2px);
     }
 
-    &-image {
+    &-image-wrapper {
         display: block;
         width: 100%;
+        height: auto;
+        background: var(--default-bg);
         aspect-ratio: 16 / 9;
-        object-fit: cover;
-        background: $case-study-image-bg;
         border-bottom: 1px solid $case-study-border;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.875;
+        }
     }
 
     &-body {

@@ -8,6 +8,10 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     card.className = "case-study-card";
     card.href = `/case-study.html?id=${caseStudy.id}`;
 
+    const imgWrapper = document.createElement("div");
+    imgWrapper.className = "case-study-card-image-wrapper";
+    card.append(imgWrapper);
+
     const img = document.createElement("img");
     img.className = "case-study-card-image";
     img.src = caseStudy.image;
@@ -35,7 +39,8 @@ function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     });
 
     body.append(title, summary, tagList);
-    card.append(img, body);
+    card.append(imgWrapper, body);
+    imgWrapper.append(img);
 
     return card;
 }
