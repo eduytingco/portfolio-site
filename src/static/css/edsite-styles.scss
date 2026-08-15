@@ -1357,3 +1357,70 @@ form {
         }
     }
 }
+
+// ============================================================
+// LinkedIn / social links — Contact page + footer
+// ============================================================
+
+.contact-social {
+    margin: 1.5rem 0 0;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--button-bg);
+    text-decoration: none;
+    font-size: .92rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+
+    span {
+        padding: 3px 0;
+    }
+
+    .social-icon {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: var(--accent);
+    }
+}
+
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-left: .75rem;
+    color: rgb(255 255 255 / 65%);
+    transition: color 150ms ease;
+
+    .social-icon {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: var(--accent);
+    }
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer-subpage {
+    display: inline-flex;
+    align-items: center;
+}

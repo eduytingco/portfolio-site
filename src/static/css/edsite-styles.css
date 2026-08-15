@@ -1281,4 +1281,59 @@ form {
   .build-note-code code {
     font-size: 0.78rem;
   }
+}
+.contact-social {
+  margin: 1.5rem 0 0;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--button-bg);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.social-link span {
+  padding: 3px 0;
+}
+.social-link .social-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.social-link:hover, .social-link:focus-visible {
+  color: var(--accent);
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 0.75rem;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 150ms ease;
+}
+.footer-social-link .social-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.footer-social-link:hover, .footer-social-link:focus-visible {
+  color: var(--accent);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#footer-subpage {
+  display: inline-flex;
+  align-items: center;
 }/*# sourceMappingURL=edsite-styles.css.map */

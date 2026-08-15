@@ -118,6 +118,12 @@ function loadResumeButton() {
     }
     resumeLink.textContent = getMessage("experience.resumeDownload");
 }
+function loadSocialLinks() {
+    const footerLinkedin = document.getElementById("footer-linkedin");
+    if (footerLinkedin !== null) {
+        footerLinkedin.setAttribute("aria-label", getMessage("footer.linkedin"));
+    }
+}
 async function loadCaseStudies() {
     if (pageId() !== "projects") {
         return;
@@ -318,6 +324,7 @@ async function init() {
         loadParallax();
         loadContent();
         loadResumeButton();
+        loadSocialLinks();
         loadContactForm();
         loadFooter();
         appendCacheBusterToExistingScripts();

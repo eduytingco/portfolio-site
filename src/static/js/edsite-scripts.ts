@@ -163,6 +163,13 @@ function loadResumeButton(): void {
     resumeLink.textContent = getMessage("experience.resumeDownload");
 }
 
+function loadSocialLinks(): void {
+    const footerLinkedin = document.getElementById("footer-linkedin");
+    if (footerLinkedin !== null) {
+        footerLinkedin.setAttribute("aria-label", getMessage("footer.linkedin"));
+    }
+}
+
 async function loadCaseStudies(): Promise<void> {
     if (pageId() !== "projects") {
         return;
@@ -400,6 +407,7 @@ async function init(): Promise<void> {
         loadParallax();
         loadContent();
         loadResumeButton();
+        loadSocialLinks();
         loadContactForm();
         loadFooter();
         appendCacheBusterToExistingScripts();

@@ -58,6 +58,24 @@ function clearFieldError(wrapper, input, errorEl) {
     input.removeAttribute("aria-invalid");
     errorEl.textContent = "";
 }
+function buildContactSocialLink() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "contact-social";
+    const link = document.createElement("a");
+    link.className = "social-link";
+    link.href = "https://www.linkedin.com/in/eduytingco/";
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.innerHTML = `<svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/>
+    </svg>`;
+    const label = document.createElement("span");
+    label.id = "contact-linkedin-label";
+    label.textContent = getMessage("contact.linkedin");
+    link.append(label);
+    wrapper.append(link);
+    return wrapper;
+}
 function buildContactForm() {
     const form = document.createElement("form");
     const submitWrapper = document.createElement("div");
@@ -78,7 +96,7 @@ function buildContactForm() {
     status.id = "contact-form-status";
     status.className = "field-error-message";
     status.setAttribute("role", "status");
-    form.append(submitWrapper, status);
+    form.append(submitWrapper, status, buildContactSocialLink());
     function validateAll() {
         let isValid = true;
         let firstInvalid = null;
