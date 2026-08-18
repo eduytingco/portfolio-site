@@ -226,6 +226,23 @@ function setText(id, key) {
         element.textContent = getMessage(key);
     }
 }
+const DEFAULT_DOCUMENT_TITLE = "Ed Uytingco's Online Portfolio";
+function setDocumentTitle() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasPageParam = urlParams.get("page") !== null;
+    if (!hasPageParam) {
+        document.title = DEFAULT_DOCUMENT_TITLE;
+        return;
+    }
+    const rawTitle = getMessage(`page.${pageId()}.title`);
+    // Strip any markup in case this key contains HTML (it's used with
+    // innerHTML elsewhere for the on-page hero title).
+    const plainTitle = rawTitle.replace(/<[^>]*>/g, "").trim();
+    const brandName = getMessage("brand.name");
+    document.title = plainTitle
+        ? `${plainTitle} | ${brandName}`
+        : brandName;
+}
 function loadContent() {
     [
         ["hero-tagline", "hero.tagline"],
@@ -299,6 +316,7 @@ function loadContent() {
     if (subpageFooterContent !== null) {
         subpageFooterContent.textContent = getMessage(`footer.${pageId()}`);
     }
+    setDocumentTitle();
 }
 function loadNavigation() {
     const navLinks = document.querySelectorAll("[nav-link-id]");

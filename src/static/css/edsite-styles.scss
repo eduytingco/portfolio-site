@@ -726,6 +726,12 @@ $case-study-tag-color: #0C447C;
 }
 
 @media (max-width: 768px) {
+    [page-id="case-study"]  {
+        #subpage-content {
+            display: none;
+        }
+    }
+
     #case-study-detail {
         padding: 2.5rem 0 3.5rem;
     }
@@ -1384,7 +1390,7 @@ form {
     letter-spacing: .02em;
 
     span {
-        padding: 3px 0;
+        padding: 4px 0 1px;
     }
 
     .social-icon {

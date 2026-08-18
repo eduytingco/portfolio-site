@@ -296,6 +296,28 @@ function setText(id: string, key: string): void {
     }
 }
 
+const DEFAULT_DOCUMENT_TITLE = "Ed Uytingco's Online Portfolio";
+
+function setDocumentTitle(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasPageParam = urlParams.get("page") !== null;
+
+    if (!hasPageParam) {
+        document.title = DEFAULT_DOCUMENT_TITLE;
+        return;
+    }
+
+    const rawTitle = getMessage(`page.${pageId()}.title`);
+    // Strip any markup in case this key contains HTML (it's used with
+    // innerHTML elsewhere for the on-page hero title).
+    const plainTitle = rawTitle.replace(/<[^>]*>/g, "").trim();
+    const brandName = getMessage("brand.name");
+
+    document.title = plainTitle
+        ? `${plainTitle} | ${brandName}`
+        : brandName;
+}
+
 function loadContent(): void {
     [
         ["hero-tagline", "hero.tagline"],
@@ -378,6 +400,8 @@ function loadContent(): void {
     if (subpageFooterContent !== null) {
         subpageFooterContent.textContent = getMessage(`footer.${pageId()}`);
     }
+
+    setDocumentTitle();
 }
 
 function loadNavigation(): void {
