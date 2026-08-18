@@ -3,6 +3,7 @@ import { loadCaseStudyData, type CaseStudy } from "./case-study-data.js";
 import { loadExperienceData, type Experience } from "./experience-data.js";
 import { loadContactForm } from "./contact-form.js";
 
+
 function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     const card = document.createElement("a");
     card.className = "case-study-card";
