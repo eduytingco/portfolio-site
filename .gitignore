@@ -1,1 +1,4 @@
 actions-runner/
+node_modules/
+dist/
+dist-static/
