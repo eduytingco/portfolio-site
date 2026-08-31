@@ -325,6 +325,10 @@ function matchedPageFromPath(): string | null {
     return null;
 }
 
+function isIndexPage(): boolean {
+    return /\/(index\.html)?$/.test(window.location.pathname);
+}
+
 function pageId(): string {
     const urlParams = new URLSearchParams(window.location.search);
     const queryPage = urlParams.get("page");
@@ -332,7 +336,12 @@ function pageId(): string {
         return queryPage;
     }
 
-    return matchedPageFromPath() ?? "case-study";
+    const matched = matchedPageFromPath();
+    if (matched !== null) {
+        return matched;
+    }
+
+    return isIndexPage() ? "home" : "case-study";
 }
 
 function setText(id: string, key: string): void {
