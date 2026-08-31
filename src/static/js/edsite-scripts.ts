@@ -151,6 +151,7 @@ function renderAboutPortrait(): HTMLElement {
     img.id = "about-portrait";
     img.src = "/src/static/images/v2/edsite-portrait-about.png";
     img.alt = "Portrait of Ed Uytingco";
+    img.width = 240;
     img.loading = "lazy";
     return img;
 }
