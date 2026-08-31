@@ -490,23 +490,23 @@ form {
 
 
 [page-id="about"] #subpage-hero {
-    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-about.PNG')
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-about.png')
 }
 
 [page-id="projects"] #subpage-hero {
-    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-projects.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-projects.png');
 }
 
 [page-id="contact"] #subpage-hero {
-    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-contact.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-contact.png');
 }
 
 [page-id="experience"] #subpage-hero {
-    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-experience.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-experience.png');
 }
 
 [page-id="case-study"] #subpage-hero {
-    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-case-study.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-case-study.png');
 }
 
 section {

@@ -463,31 +463,31 @@ form {
 }
 
 [page-id=about] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-about.PNG");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-about.png");
   background-size: cover;
   background-position: center;
 }
 
 [page-id=projects] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-projects.PNG");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-projects.png");
   background-size: cover;
   background-position: center;
 }
 
 [page-id=contact] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-contact.PNG");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-contact.png");
   background-size: cover;
   background-position: center;
 }
 
 [page-id=experience] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-experience.PNG");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-experience.png");
   background-size: cover;
   background-position: center;
 }
 
 [page-id=case-study] #subpage-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-case-study.PNG");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/src/static/images/v2/edsite-subpage-hero-case-study.png");
   background-size: cover;
   background-position: center;
 }
