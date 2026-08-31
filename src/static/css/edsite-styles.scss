@@ -481,7 +481,7 @@ form {
     }
 }
 
-@mixin overlay-bg($url, $opacity1: 0.6, $opacity2: 0.8, $color: #000) {
+@mixin overlay-bg($url, $opacity1: 0.3, $opacity2: 0.4, $color: #000) {
     background-image: linear-gradient(rgba($color, $opacity1),
             rgba($color, $opacity2)), url($url);
     background-size: cover;
@@ -490,23 +490,23 @@ form {
 
 
 [page-id="about"] #subpage-hero {
-    @include overlay-bg('/src/static/images/edsite-subpage-hero-about.PNG')
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-about.PNG')
 }
 
 [page-id="projects"] #subpage-hero {
-    @include overlay-bg('/src/static/images/edsite-subpage-hero-projects.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-projects.PNG');
 }
 
 [page-id="contact"] #subpage-hero {
-    @include overlay-bg('/src/static/images/edsite-subpage-hero-contact.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-contact.PNG');
 }
 
 [page-id="experience"] #subpage-hero {
-    @include overlay-bg('/src/static/images/edsite-subpage-hero-experience.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-experience.PNG');
 }
 
 [page-id="case-study"] #subpage-hero {
-    @include overlay-bg('/src/static/images/edsite-subpage-hero-case-study.PNG');
+    @include overlay-bg('/src/static/images/v2/edsite-subpage-hero-case-study.PNG');
 }
 
 section {
