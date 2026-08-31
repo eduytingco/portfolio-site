@@ -5,7 +5,7 @@ import { loadContactForm } from "./contact-form.js";
 function renderCaseStudyCard(caseStudy) {
     const card = document.createElement("a");
     card.className = "case-study-card";
-    card.href = `/case-study.html?id=${caseStudy.id}`;
+    card.href = `/case-study-${caseStudy.id}.html`;
     const imgWrapper = document.createElement("div");
     imgWrapper.className = "case-study-card-image-wrapper";
     card.append(imgWrapper);
@@ -216,9 +216,23 @@ function loadParallax() {
     }, { passive: true });
     update();
 }
+function matchedPageFromPath() {
+    const pathMatch = window.location.pathname.match(/\/([a-z-]+)\.html$/);
+    if (pathMatch !== null &&
+        pathMatch[1] !== "index" &&
+        pathMatch[1] !== "pages" &&
+        !pathMatch[1].startsWith("case-study")) {
+        return pathMatch[1];
+    }
+    return null;
+}
 function pageId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("page") || "case-study";
+    const queryPage = urlParams.get("page");
+    if (queryPage !== null) {
+        return queryPage;
+    }
+    return matchedPageFromPath() ?? "case-study";
 }
 function setText(id, key) {
     const element = document.getElementById(id);
@@ -230,7 +244,8 @@ const DEFAULT_DOCUMENT_TITLE = "Ed Uytingco's Online Portfolio";
 function setDocumentTitle() {
     const urlParams = new URLSearchParams(window.location.search);
     const hasPageParam = urlParams.get("page") !== null;
-    if (!hasPageParam) {
+    const hasPathRoute = matchedPageFromPath() !== null;
+    if (!hasPageParam && !hasPathRoute) {
         document.title = DEFAULT_DOCUMENT_TITLE;
         return;
     }
@@ -353,6 +368,10 @@ async function init() {
     }
     catch (error) {
         console.error("Unable to initialize the website:", error);
+    }
+    finally {
+        const w = window;
+        w.__PRERENDER_READY_COUNT__ = (w.__PRERENDER_READY_COUNT__ ?? 0) + 1;
     }
 }
 document.addEventListener("DOMContentLoaded", () => {

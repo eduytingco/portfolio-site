@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en" style="--scroll: 0;"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Ed Uytingco — Design Engineer">
+    <meta property="og:description" content="Design Engineer bridging product design and front-end engineering.">
+    <meta property="og:image" content="https://ed.uytingco.com/src/static/images/v2/edsite-portrait-hero.png">
+    <link rel="icon" type="image/svg+xml" href="ed-favicon-brand.svg">
+    <link rel="stylesheet" href="src/static/css/edsite-styles.css">
+    <title>About Me | Ed Uytingco</title>
+</head>
+
+<body>
+    <header>
+        <nav id="subpage-nav" class="site-nav subpage" aria-label="About Me">
+            <a class="brand" href="index.html" aria-label="Ed Uytingco home" title="Ed Uytingco Online Portfolio Home">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <span class="brand-name" id="brand-name">Ed Uytingco</span>
+            </a>
+            <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu" aria-label="About Me">
+                <li><a href="about.html" nav-link-id="about">About Me</a></li>
+                <li><a href="projects.html" nav-link-id="projects">Projects</a></li>
+                <li><a href="experience.html" nav-link-id="experience">Experience</a></li>
+                <li><a href="contact.html" nav-link-id="contact">Let's Connect</a></li>
+                <li><a id="resume-download" nav-link-id="resume" href="/src/static/documents/ed-uytingco-resume.pdf" download="" rel="noopener" target="_blank">Download Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main role="subpage" page-id="about">
+        <section id="subpage-hero">
+            <div id="subpage-hero-content" class="container">
+                <h1 id="subpage-hero-title">About Me</h1>
+            </div>
+        </section>
+        <section id="subpage-content">
+            <div id="subpage-content-container" class="container">
+                <p id="subpage-content-description" class="text-block">I’m a Design Engineer who enjoys bringing together design, technology, and problem-solving to create digital experiences that are intuitive, accessible, and meaningful. My work combines UX design with front-end engineering, allowing me to bridge the gap between concept and implementation while delivering solutions that meet both user needs and business goals.
+
+ Since 2016, I’ve been helping build enterprise web experiences at Texas Instruments, contributing to UX design, design systems, front-end development, personalization, usability research, and accessibility initiatives. I enjoy collaborating with cross-functional teams to transform complex challenges into simple, scalable, and user-centered solutions.
+
+ With a background in Fine Arts from San Jose State University, I approach every project with both creativity and technical precision. I work with modern web technologies, including TypeScript, JavaScript, HTML, CSS, SASS, REACT, and component-based design systems, to create experiences that are both visually engaging and technically robust.
+
+ I’m passionate about continuous learning and always looking for opportunities to improve my craft. Whether I’m designing a new interface, refining a user journey, or developing reusable front-end components, my goal is to build products that make technology easier to use and create lasting value for users.</p>
+            </div>
+        </section>
+        <section id="subpage-insta-container">
+            <div id="subpage-insta-content" class="container"><div class="build-note"><p class="build-note-intro">This site is hand-built with TypeScript and SASS - no framework, no CMS. Content is data-driven (case studies and experience entries render from typed JSON), and the design system is authored as reusable SASS mixins rather than one-off styles, so a pattern like the glass-panel treatment below is defined once and shared across the Projects grid, Experience cards, and contact form.</p><pre class="build-note-code"><code>@mixin glass-surface($radius: 20px) {
+    background: rgb(255 255 255 / 55%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: $radius;
+    box-shadow:
+        0 8px 32px rgb(0 0 0 / 12%),
+        inset 0 1px 0 rgb(255 255 255 / 60%);
+}</code></pre><p class="build-note-caption">Applied to cards and panels, but deliberately not to form inputs - typed text needs reliable contrast, so form fields stay solid even when their container goes glass.</p></div></div>
+        </section>
+    </main>
+    <footer>
+        <section id="footer-subpage"><span id="footer-subpage-content" role="footer-content">© 2026 Ed Uytingco Online Portfolio. All Rights Reserved. Designed by Ed Uytingco. Built with HTML, CSS, and JavaScript.</span></section>
+        <a id="footer-linkedin" class="footer-social-link" href="https://www.linkedin.com/in/eduytingco/" target="_blank" rel="noopener" aria-label="Visit LinkedIn profile">
+            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"></path>
+            </svg>
+        </a>
+    </footer>
+    <script src="dist/static/js/edsite-scripts.js" type="module"></script>
+
+
+</body></html>

@@ -3,7 +3,13 @@ import { loadCaseStudyData, findCaseStudy, type CaseStudy } from "./case-study-d
 
 function caseStudyIdFromUrl(): string | null {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("id");
+    const queryId = urlParams.get("id");
+    if (queryId !== null) {
+        return queryId;
+    }
+
+    const pathMatch = window.location.pathname.match(/\/case-study-(.+)\.html$/);
+    return pathMatch !== null ? pathMatch[1] : null;
 }
 
 function renderConstraints(caseStudy: CaseStudy): void {
@@ -74,6 +80,9 @@ async function init(): Promise<void> {
         await loadCaseStudyDetail();
     } catch (error: unknown) {
         console.error("Unable to initialize case study page:", error);
+    } finally {
+        const w = window as unknown as { __PRERENDER_READY_COUNT__?: number };
+        w.__PRERENDER_READY_COUNT__ = (w.__PRERENDER_READY_COUNT__ ?? 0) + 1;
     }
 }
 

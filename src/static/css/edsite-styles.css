@@ -178,7 +178,7 @@ main {
 
 .hero-image {
   position: absolute;
-  top: -2%;
+  top: -20%;
   left: 0;
   z-index: -3;
   width: 100%;
@@ -373,7 +373,7 @@ button, input[type=submit] {
   position: relative;
   display: flex;
   flex-direction: row;
-  height: 22vh;
+  height: 50vh;
   background-color: var(--default-bg);
 }
 [page-id] #subpage-hero-title {
@@ -686,6 +686,9 @@ button:hover {
 @media (max-width: 768px) {
   [page-id=case-study] #subpage-content {
     display: none;
+  }
+  [page-id] #subpage-hero {
+    height: 22vh;
   }
   #case-study-detail {
     padding: 2.5rem 0 3.5rem;

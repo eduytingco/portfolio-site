@@ -7,7 +7,7 @@ import { loadContactForm } from "./contact-form.js";
 function renderCaseStudyCard(caseStudy: CaseStudy): HTMLElement {
     const card = document.createElement("a");
     card.className = "case-study-card";
-    card.href = `/case-study.html?id=${caseStudy.id}`;
+    card.href = `/case-study-${caseStudy.id}.html`;
 
     const imgWrapper = document.createElement("div");
     imgWrapper.className = "case-study-card-image-wrapper";
@@ -285,9 +285,27 @@ function loadParallax(): void {
     update();
 }
 
+function matchedPageFromPath(): string | null {
+    const pathMatch = window.location.pathname.match(/\/([a-z-]+)\.html$/);
+    if (
+        pathMatch !== null &&
+        pathMatch[1] !== "index" &&
+        pathMatch[1] !== "pages" &&
+        !pathMatch[1].startsWith("case-study")
+    ) {
+        return pathMatch[1];
+    }
+    return null;
+}
+
 function pageId(): string {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("page") || "case-study";
+    const queryPage = urlParams.get("page");
+    if (queryPage !== null) {
+        return queryPage;
+    }
+
+    return matchedPageFromPath() ?? "case-study";
 }
 
 function setText(id: string, key: string): void {
@@ -302,8 +320,9 @@ const DEFAULT_DOCUMENT_TITLE = "Ed Uytingco's Online Portfolio";
 function setDocumentTitle(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const hasPageParam = urlParams.get("page") !== null;
+    const hasPathRoute = matchedPageFromPath() !== null;
 
-    if (!hasPageParam) {
+    if (!hasPageParam && !hasPathRoute) {
         document.title = DEFAULT_DOCUMENT_TITLE;
         return;
     }
@@ -443,6 +462,9 @@ async function init(): Promise<void> {
         appendCacheBusterToExistingScripts();
     } catch (error: unknown) {
         console.error("Unable to initialize the website:", error);
+    } finally {
+        const w = window as unknown as { __PRERENDER_READY_COUNT__?: number };
+        w.__PRERENDER_READY_COUNT__ = (w.__PRERENDER_READY_COUNT__ ?? 0) + 1;
     }
 }
 

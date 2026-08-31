@@ -1,7 +1,15 @@
 import { getMessage } from "./i18n.js";
 function pageId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("page") || "home";
+    const queryPage = urlParams.get("page");
+    if (queryPage !== null) {
+        return queryPage;
+    }
+    const pathMatch = window.location.pathname.match(/\/([a-z-]+)\.html$/);
+    if (pathMatch !== null && pathMatch[1] !== "index" && pathMatch[1] !== "pages") {
+        return pathMatch[1];
+    }
+    return "home";
 }
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function requiredValidator(value) {

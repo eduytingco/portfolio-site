@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en" style="--scroll: 0;"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Ed Uytingco — Design Engineer">
+    <meta property="og:description" content="Design Engineer bridging product design and front-end engineering.">
+    <meta property="og:image" content="https://ed.uytingco.com/src/static/images/v2/edsite-case-study.png">
+    <link rel="icon" type="image/svg+xml" href="ed-favicon-brand.svg">
+    <link rel="stylesheet" href="src/static/css/edsite-styles.css">
+    <title>Customizable homepage carousel</title>
+</head>
+
+<body>
+    <header>
+        <nav id="subpage-nav" class="site-nav subpage" aria-label="Case study">
+            <a class="brand" href="index.html" aria-label="Ed Uytingco home" title="Ed Uytingco Online Portfolio Home">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <span class="brand-name" id="brand-name">Ed Uytingco</span>
+            </a>
+            <button id="nav-menu-toggle" class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu" aria-label="Case study">
+                <li><a href="about.html" nav-link-id="about">About Me</a></li>
+                <li><a href="projects.html" nav-link-id="projects">Projects</a></li>
+                <li><a href="experience.html" nav-link-id="experience">Experience</a></li>
+                <li><a href="contact.html" nav-link-id="contact">Let's Connect</a></li>
+                <li><a id="resume-download" nav-link-id="resume" href="/src/static/documents/ed-uytingco-resume.pdf" download="" rel="noopener" target="_blank">Download Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main role="subpage" page-id="case-study">
+        <section id="subpage-hero">
+            <div id="subpage-hero-content" class="container">
+                <h1 id="subpage-hero-title">Case Study</h1>
+            </div>
+        </section>
+        <section id="subpage-content">
+            <div id="subpage-content-container" class="container">
+                <p id="subpage-content-description" class="text-block">Explore the details of this project, including the design process, technical implementation, and the impact it had on users and stakeholders. Each case study provides insight into my approach to problem-solving, collaboration, and delivering user-centered solutions that meet business objectives.</p>
+            </div>
+        </section>
+        <section id="subpage-insta-container">
+            <div id="subpage-insta-content" class="container">
+                <div id="case-study-detail">
+                    <a href="projects.html" id="case-study-back">← Back to projects</a>
+
+                    <header class="case-study-header">
+                        <h1 id="case-study-title">Customizable homepage carousel</h1>
+                        <p id="case-study-subtitle">Design + front-end build · Enterprise marketing site</p>
+                    </header>
+
+                    <img id="case-study-image" class="case-study-image" alt="Customizable homepage carousel" loading="lazy" src="/src/static/images/homepage-carousel-case-study-v2.png">
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Problem</h2>
+                        <p id="case-study-problem">Marketing needed to customize homepage carousel slides by target audience without engineering involvement each time.</p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Constraints</h2>
+                        <div id="case-study-constraints" class="case-study-constraints-grid"><div class="constraint-box"><div class="title">Multi-region</div><div class="desc">Content needed translation support across regions</div></div><div class="constraint-box"><div class="title">Third-party A/B testing</div><div class="desc">Component had to integrate with an external test platform</div></div></div>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Approach</h2>
+                        <p id="case-study-approach">Built a slide component with configurable audience targeting, structured so copy and imagery stayed swappable per locale and per A/B variant served by the third-party platform.</p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Result</h2>
+                        <p id="case-study-result" class="case-study-result-box">Delivered a customizable widget, built on the third-party platform, where a marketer's custom slide overrides the existing homepage carousel.</p>
+                    </section>
+
+                    <section class="case-study-section">
+                        <h2 class="case-study-label">Reflection</h2>
+                        <p id="case-study-reflection">Once marketing had the tool in hand, they ran with it — using the flexibility to create compelling, creative slides beyond what I'd initially anticipated.</p>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <section id="footer-subpage"><span id="footer-subpage-content" role="footer-content">© 2026 Ed Uytingco Online Portfolio. All Rights Reserved. Designed by Ed Uytingco. Built with HTML, CSS, and JavaScript.</span></section>
+    </footer>
+    <script src="dist/static/js/edsite-scripts.js" type="module"></script>
+    <script src="dist/static/js/case-study.js" type="module"></script>
+
+
+</body></html>

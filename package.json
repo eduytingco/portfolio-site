@@ -2,10 +2,14 @@
   "name": "stunning-adventure",
   "private": true,
   "scripts": {
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json && node scripts/prerender.mjs"
   },
   "dependencies": {
     "properties-reader": "^3.0.1",
     "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.0.1"
   }
 }

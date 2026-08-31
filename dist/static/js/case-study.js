@@ -2,7 +2,12 @@ import { loadMessages } from "./i18n.js";
 import { loadCaseStudyData, findCaseStudy } from "./case-study-data.js";
 function caseStudyIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("id");
+    const queryId = urlParams.get("id");
+    if (queryId !== null) {
+        return queryId;
+    }
+    const pathMatch = window.location.pathname.match(/\/case-study-(.+)\.html$/);
+    return pathMatch !== null ? pathMatch[1] : null;
 }
 function renderConstraints(caseStudy) {
     const container = document.getElementById("case-study-constraints");
@@ -59,6 +64,10 @@ async function init() {
     }
     catch (error) {
         console.error("Unable to initialize case study page:", error);
+    }
+    finally {
+        const w = window;
+        w.__PRERENDER_READY_COUNT__ = (w.__PRERENDER_READY_COUNT__ ?? 0) + 1;
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
