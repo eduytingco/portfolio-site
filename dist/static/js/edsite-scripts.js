@@ -110,7 +110,6 @@ function renderAboutPortrait() {
     img.id = "about-portrait";
     img.src = "/src/static/images/v2/edsite-portrait-about.png";
     img.alt = "Portrait of Ed Uytingco";
-    img.width = 240;
     img.loading = "lazy";
     return img;
 }
@@ -355,12 +354,40 @@ function loadContent() {
     }
     setDocumentTitle();
 }
+// Single source of truth for every internal navigation URL on the site.
+// Change a path here and it's picked up everywhere: the main nav, the
+// resume link, the index.html quick-link cards, the case-study "back"
+// link, and the brand/home logo -- all driven from this one object via
+// loadNavigation() and loadRouteLinks() below.
+const NAV_ROUTES = {
+    home: "index.html",
+    about: "about.html",
+    projects: "projects.html",
+    experience: "experience.html",
+    contact: "contact.html",
+    resume: "/src/static/documents/ed-uytingco-resume.pdf",
+};
 function loadNavigation() {
     const navLinks = document.querySelectorAll("[nav-link-id]");
     navLinks.forEach((link) => {
         const navLinkId = link.getAttribute("nav-link-id");
-        if (navLinkId !== null) {
-            link.textContent = getMessage(`nav.${navLinkId}`);
+        if (navLinkId === null) {
+            return;
+        }
+        link.textContent = getMessage(`nav.${navLinkId}`);
+        if (navLinkId in NAV_ROUTES) {
+            link.setAttribute("href", NAV_ROUTES[navLinkId]);
+        }
+    });
+}
+// For links that need a URL from NAV_ROUTES but keep their own text
+// (CTA buttons, the case-study back-link, the brand/home logo) rather
+// than the nav-label text loadNavigation() sets.
+function loadRouteLinks() {
+    document.querySelectorAll("[route-link-id]").forEach((link) => {
+        const routeId = link.getAttribute("route-link-id");
+        if (routeId !== null && routeId in NAV_ROUTES) {
+            link.setAttribute("href", NAV_ROUTES[routeId]);
         }
     });
 }
@@ -381,6 +408,7 @@ async function init() {
         loadAboutPortrait();
         loadNavbar();
         loadNavigation();
+        loadRouteLinks();
         loadParallax();
         loadContent();
         loadResumeButton();
