@@ -1,3 +1,39 @@
+@mixin glass-backdrop {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+            radial-gradient(560px circle at 85% 6%, rgb(217 167 42 / 30%), transparent 60%),
+            radial-gradient(500px circle at 8% 30%, rgb(140 190 210 / 24%), transparent 60%),
+            radial-gradient(620px circle at 60% 90%, rgb(217 167 42 / 16%), transparent 55%),
+            var(--surface);
+    }
+
+    @media (prefers-reduced-motion: reduce), (max-width: 480px) {
+        &::before {
+            background: var(--surface);
+        }
+    }
+}
+
+@mixin glass-surface($radius: 20px) {
+    background: rgb(255 255 255 / 55%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: $radius;
+    box-shadow:
+        0 8px 32px rgb(0 0 0 / 12%),
+        inset 0 1px 0 rgb(255 255 255 / 60%);
+}
+
 :root {
     --accent: #d9a72a;
     --text: #f7f7f4;
@@ -49,7 +85,12 @@ a {
 }
 
 img {
-    display: block
+    display: block;
+
+    &#about-portrait {
+        @include glass-surface(20px);
+        margin: 32px auto;
+    }
 }
 
 .site-header {
@@ -1166,42 +1207,6 @@ $case-study-tag-color: #0C447C;
     .scroll-indicator {
         animation: none
     }
-}
-
-@mixin glass-backdrop {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background:
-            radial-gradient(560px circle at 85% 6%, rgb(217 167 42 / 30%), transparent 60%),
-            radial-gradient(500px circle at 8% 30%, rgb(140 190 210 / 24%), transparent 60%),
-            radial-gradient(620px circle at 60% 90%, rgb(217 167 42 / 16%), transparent 55%),
-            var(--surface);
-    }
-
-    @media (prefers-reduced-motion: reduce), (max-width: 480px) {
-        &::before {
-            background: var(--surface);
-        }
-    }
-}
-
-@mixin glass-surface($radius: 20px) {
-    background: rgb(255 255 255 / 55%);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgb(255 255 255 / 40%);
-    border-radius: $radius;
-    box-shadow:
-        0 8px 32px rgb(0 0 0 / 12%),
-        inset 0 1px 0 rgb(255 255 255 / 60%);
 }
 
 [page-id="experience"] main[role="subpage"] {

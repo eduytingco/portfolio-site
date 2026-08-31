@@ -200,6 +200,16 @@ async function renderRoute(route) {
         throw new Error(`${route.outPath}: ${err.message}`);
     }
 
+    // loadParallax() sets a --scroll custom property on <html> at runtime,
+    // used to drive a parallax effect as the user scrolls. It's always 0
+    // during prerendering (jsdom never actually scrolls), so it's dynamic
+    // runtime state, not real content -- strip it before saving.
+    const htmlEl = dom.window.document.documentElement;
+    htmlEl.style.removeProperty("--scroll");
+    if (htmlEl.getAttribute("style") === "") {
+        htmlEl.removeAttribute("style");
+    }
+
     const renderedHtml = restoreModuleScriptTags(dom.serialize());
     dom.window.close();
     return renderedHtml;

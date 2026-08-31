@@ -105,6 +105,28 @@ function renderAboutBuildNote() {
     wrapper.append(intro, pre, caption);
     return wrapper;
 }
+function renderAboutPortrait() {
+    const img = document.createElement("img");
+    img.id = "about-portrait";
+    img.src = "/src/static/images/v2/edsite-portrait-about.png";
+    img.alt = "Portrait of Ed Uytingco";
+    img.width = 240;
+    img.loading = "lazy";
+    return img;
+}
+function loadAboutPortrait() {
+    if (pageId() !== "about") {
+        return;
+    }
+    const description = document.getElementById("subpage-content-description");
+    if (description === null || description.parentElement === null) {
+        return;
+    }
+    if (document.getElementById("about-portrait") !== null) {
+        return;
+    }
+    description.parentElement.insertBefore(renderAboutPortrait(), description);
+}
 function loadAboutBuildNote() {
     if (pageId() !== "about") {
         return;
@@ -356,6 +378,7 @@ async function init() {
         await loadCaseStudies();
         await loadExperience();
         loadAboutBuildNote();
+        loadAboutPortrait();
         loadNavbar();
         loadNavigation();
         loadParallax();
