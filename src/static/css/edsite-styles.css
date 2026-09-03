@@ -52,15 +52,6 @@ a {
 img {
   display: block;
 }
-img#about-portrait {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  margin: 32px auto;
-}
 
 .site-header {
   position: absolute;
@@ -606,6 +597,17 @@ button:hover {
   color: #6b6a62;
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
   line-height: 1.6;
+}
+
+#about-portrait {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 2rem;
+  border-radius: 12px;
+  border: 1px solid #e2e0d8;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .case-study-image {
@@ -1295,6 +1297,18 @@ form {
   font-style: italic;
 }
 
+.build-note-repo-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.build-note-repo-link:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .build-note-code {
     padding: 1rem;
@@ -1304,6 +1318,9 @@ form {
   }
 }
 .contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
   margin: 1.5rem 0 0;
 }
 

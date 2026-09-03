@@ -6,9 +6,9 @@
       "design",
       "frontEnd"
     ],
-    "title": "Customizable homepage carousel",
+    "title": "Scaling Homepage Personalization with a Configurable Carousel",
     "subtitle": "Design + front-end build · Enterprise marketing site",
-    "problem": "Marketing needed to customize homepage carousel slides by target audience without engineering involvement each time.",
+    "problem": "Designing and engineering a reusable personalization solution that enables targeted homepage experiences while working within an existing enterprise design system.",
     "constraints": [
       {
         "title": "Multi-region",
@@ -55,9 +55,9 @@
       "frontEnd",
       "Thymeleaf"
     ],
-    "title": "TI Product Page Redesign",
+    "title": "Redesigning the TI.com Product Experience",
     "subtitle": "Design + Thymeleaf build · Enterprise marketing site",
-    "problem": "TI's product page had a confusing layout and lacked clear navigation for customers.",
+    "problem": "Reorganizing complex semiconductor product information into a clearer, responsive experience while translating the design into a maintainable production implementation.",
     "constraints": [
       {
         "title": "Public information only",
