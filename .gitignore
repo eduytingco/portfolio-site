@@ -3,3 +3,6 @@ node_modules/
 .DS_Store
 dist/
 dist-static/
+src/.DS_Store
+src/static/.DS_Store
+src/static/images/.DS_Store
